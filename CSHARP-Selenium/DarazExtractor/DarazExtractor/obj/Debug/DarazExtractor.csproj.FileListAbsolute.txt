@@ -54,3 +54,6 @@ E:\GitHub\CSHARP-Selenium\DarazExtractor\DarazExtractor\obj\Debug\DarazExtractor
 E:\GitHub\CSHARP-Selenium\DarazExtractor\DarazExtractor\obj\Debug\DarazExtractor.Form2.resources
 E:\GitHub\CSHARP-Selenium\DarazExtractor\DarazExtractor\obj\Debug\DarazExtractor.Properties.Resources.resources
 E:\GitHub\CSHARP-Selenium\DarazExtractor\DarazExtractor\obj\Debug\DarazExtractor.csproj.GenerateResource.Cache
+E:\GitHub\Scraping-BOT\CSHARP-Selenium\DarazExtractor\DarazExtractor\bin\Debug\DarazExtractor.exe.config
+E:\GitHub\Scraping-BOT\CSHARP-Selenium\DarazExtractor\DarazExtractor\obj\Debug\DarazExtractor.exe
+E:\GitHub\Scraping-BOT\CSHARP-Selenium\DarazExtractor\DarazExtractor\obj\Debug\DarazExtractor.pdb

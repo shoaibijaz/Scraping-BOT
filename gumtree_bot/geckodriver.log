@@ -1,0 +1,59 @@
+1483774832932	geckodriver	INFO	Listening on 127.0.0.1:55476
+1483774834872	mozprofile::profile	INFO	Using profile path C:\Users\Shoaib\AppData\Local\Temp\rust_mozprofile.i70rS1dp9ftk
+1483774834880	geckodriver::marionette	INFO	Starting browser C:\Program Files\Mozilla Firefox\firefox.exe
+1483774834949	geckodriver::marionette	INFO	Connecting to Marionette on localhost:55482
+1483774838613	Marionette	INFO	Listening on port 55482
+[Child 8132] WARNING: pipe error: 109: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 8132] WARNING: pipe error: 109: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1483777182637	geckodriver	INFO	Listening on 127.0.0.1:56292
+1483777184610	mozprofile::profile	INFO	Using profile path C:\Users\Shoaib\AppData\Local\Temp\rust_mozprofile.qp5groTTUK8k
+1483777184614	geckodriver::marionette	INFO	Starting browser C:\Program Files\Mozilla Firefox\firefox.exe
+1483777184671	geckodriver::marionette	INFO	Connecting to Marionette on localhost:56298
+1483777189241	Marionette	INFO	Listening on port 56298
+JavaScript error: https://sdk.accountkit.com/en_US/sdk.js?hash=1fe0b472e873d09a4f280cc848df1d9f, line 70: Error: Invalid App Id: Must be a number or numeric string representing the application id. For more details, see https://developers.facebook.com/docs/accountkit/integratingweb#configureloginhtml
+1483777260925	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+1483777260934	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+1483777260939	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+1483777436966	geckodriver	INFO	Listening on 127.0.0.1:56424
+1483777438957	mozprofile::profile	INFO	Using profile path C:\Users\Shoaib\AppData\Local\Temp\rust_mozprofile.vjveKK3SgBEb
+1483777438959	geckodriver::marionette	INFO	Starting browser C:\Program Files\Mozilla Firefox\firefox.exe
+1483777438969	geckodriver::marionette	INFO	Connecting to Marionette on localhost:56430
+1483777441570	Marionette	INFO	Listening on port 56430
+JavaScript error: https://sdk.accountkit.com/en_US/sdk.js?hash=1fe0b472e873d09a4f280cc848df1d9f, line 70: Error: Invalid App Id: Must be a number or numeric string representing the application id. For more details, see https://developers.facebook.com/docs/accountkit/integratingweb#configureloginhtml
+1483777515582	geckodriver	INFO	Listening on 127.0.0.1:56533
+1483777517570	mozprofile::profile	INFO	Using profile path C:\Users\Shoaib\AppData\Local\Temp\rust_mozprofile.oSfNDsCFPfa3
+1483777517572	geckodriver::marionette	INFO	Starting browser C:\Program Files\Mozilla Firefox\firefox.exe
+1483777517582	geckodriver::marionette	INFO	Connecting to Marionette on localhost:56539
+1483777519063	Marionette	INFO	Listening on port 56539
+JavaScript error: https://sdk.accountkit.com/en_US/sdk.js?hash=1fe0b472e873d09a4f280cc848df1d9f, line 70: Error: Invalid App Id: Must be a number or numeric string representing the application id. For more details, see https://developers.facebook.com/docs/accountkit/integratingweb#configureloginhtml
+JavaScript error: https://www.gumtree.sg/, line 862: InvalidCharacterError: String contains an invalid character
+[Child 10788] WARNING: pipe error: 109: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1483777716593	geckodriver	INFO	Listening on 127.0.0.1:56800
+1483777718440	mozprofile::profile	INFO	Using profile path C:\Users\Shoaib\AppData\Local\Temp\rust_mozprofile.Nn5ubX6j1mfF
+1483777718443	geckodriver::marionette	INFO	Starting browser C:\Program Files\Mozilla Firefox\firefox.exe
+1483777718457	geckodriver::marionette	INFO	Connecting to Marionette on localhost:56806
+1483777720758	Marionette	INFO	Listening on port 56806
+JavaScript error: https://sdk.accountkit.com/en_US/sdk.js?hash=1fe0b472e873d09a4f280cc848df1d9f, line 70: Error: Invalid App Id: Must be a number or numeric string representing the application id. For more details, see https://developers.facebook.com/docs/accountkit/integratingweb#configureloginhtml
+JavaScript error: https://www.gumtree.sg/, line 862: InvalidCharacterError: String contains an invalid character
+1483777761233	geckodriver	INFO	Listening on 127.0.0.1:56961
+1483777763220	mozprofile::profile	INFO	Using profile path C:\Users\Shoaib\AppData\Local\Temp\rust_mozprofile.KFeuTHalHdJO
+1483777763224	geckodriver::marionette	INFO	Starting browser C:\Program Files\Mozilla Firefox\firefox.exe
+1483777763236	geckodriver::marionette	INFO	Connecting to Marionette on localhost:56967
+1483777765360	Marionette	INFO	Listening on port 56967
+JavaScript error: https://sdk.accountkit.com/en_US/sdk.js?hash=1fe0b472e873d09a4f280cc848df1d9f, line 70: Error: Invalid App Id: Must be a number or numeric string representing the application id. For more details, see https://developers.facebook.com/docs/accountkit/integratingweb#configureloginhtml
+JavaScript error: https://www.gumtree.sg/, line 863: InvalidCharacterError: String contains an invalid character
+[Child 7216] WARNING: pipe error: 109: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+e.pctPhzrLY1OQ
+1483777814099	geckodriver::marionette	INFO	Starting browser C:\Program Files\Mozilla Firefox\firefox.exe
+1483777814113	geckodriver::marionette	INFO	Connecting to Marionette on localhost:57171
+1483777816738	Marionette	INFO	Listening on port 57171
+JavaScript error: https://sdk.accountkit.com/en_US/sdk.js?hash=1fe0b472e873d09a4f280cc848df1d9f, line 70: Error: Invalid App Id: Must be a number or numeric string representing the application id. For more details, see https://developers.facebook.com/docs/accountkit/integratingweb#configureloginhtml
+[Child 11272] WARNING: pipe error: 109: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1483778260974	geckodriver	INFO	Listening on 127.0.0.1:57558
+1483778262913	mozprofile::profile	INFO	Using profile path C:\Users\Shoaib\AppData\Local\Temp\rust_mozprofile.nVxRD132hftv
+1483778262917	geckodriver::marionette	INFO	Starting browser C:\Program Files\Mozilla Firefox\firefox.exe
+1483778262940	geckodriver::marionette	INFO	Connecting to Marionette on localhost:57564
+1483778265929	Marionette	INFO	Listening on port 57564
+JavaScript error: https://sdk.accountkit.com/en_US/sdk.js?hash=1fe0b472e873d09a4f280cc848df1d9f, line 70: Error: Invalid App Id: Must be a number or numeric string representing the application id. For more details, see https://developers.facebook.com/docs/accountkit/integratingweb#configureloginhtml
+[Child 2264] WARNING: pipe error: 109: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 2264] WARNING: pipe error: 109: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
