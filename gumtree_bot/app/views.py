@@ -16,14 +16,13 @@ class DashboardView(TemplateView):
         return self.render_to_response(context)
 
 
-class HttpGet(View):
+class SearchAds(View):
 
     def get(self, request, *args, **kwargs):
-        content = ''
-
         url = request.GET.get('text', None)
+        response = ScrapAds().search_status(url)
 
-        return HttpResponse(ScrapAds().search_status(url))
+        return HttpResponse(json.dumps(response))
 
 
 class ExtractAds(View):

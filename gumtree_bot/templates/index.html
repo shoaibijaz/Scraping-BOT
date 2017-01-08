@@ -105,20 +105,15 @@
         <div class="container-fluid">
 
             <div class="row">
-                <div class="col-md-12">
-                    <div class="alert alert-info">
-                        <span id="msg"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
+
+                <div class="col-md-6" id="leftSide">
 
                     <div class="row">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Ads Scraper</h4>
-                                <p class="category"></p>
+                                <h4 class="title">Ads Scraper
+
+                                </h4>
                             </div>
                             <div class="content">
 
@@ -132,7 +127,18 @@
                                         </div>
                                     </div>
 
-                                    <button type="button" id="btnExtractAds" class="btn btn-info btn-fill pull-right">Extract Ads</button>
+                                    <div class="row">
+
+                                        <div class="col-md-12 text-right">
+
+                                            <button type="button" id="btnExtractAds" class="btn btn-info btn-fill btn-sm">Extract Ads</button>
+
+                                            &nbsp;
+
+                                            <button type="button" id="btnCancelExtractAds" disabled="" class="btn btn-warning btn-fill btn-sm">Stop/Cancel</button>
+
+                                        </div>
+                                    </div>
 
                                     <div class="clearfix"></div>
 
@@ -140,8 +146,8 @@
 
                                         <hr>
                                         <div class="legend">
-                                            <i class="fa fa-circle text-info"></i> Ads(<span id="lblAds">00</span>)
-                                            <i class="fa fa-circle text-warning"></i> Pages(<span id="lblPages">00</span>)
+                                            <i class="fa fa-circle text-info"></i> Ads(<span id="lblAds">0</span>)
+                                            <i class="fa fa-circle text-warning"></i> Pages(<span id="lblPages">0</span>)
                                         </div>
                                     </div>
 
@@ -150,6 +156,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="card">
                             <div class="header">
@@ -161,11 +168,26 @@
                                 <form>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Message</label>
-                                                <textarea class="form-control" id="txtMessage" placeholder="Enter message" >
 
+                                            <div>
+                                                <input type="checkbox">    I'm interested. Please contact me.
+                                            </div>
+                                            <div>
+                                                <input type="checkbox">    When and where can I see it?
+                                            </div>
+                                            <div class="form-group">
+                                                <textarea class="form-control" id="txtMessage" placeholder="Enter message" >
                                                 </textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="txtName" placeholder="Enter Name" >
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="txtEmail" placeholder="Enter Email" >
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="txtPhone" placeholder="Enter Phone" >
                                             </div>
                                         </div>
                                     </div>
@@ -179,35 +201,44 @@
                     </div>
                 </div>
 
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="header">
-                            <h4 class="title">Extracted Ads</h4>
-                            <p class="category" id="extractedCount">00</p>
-                        </div>
-                        <div class="content">
+                <div class="col-md-6" id="rightSide">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">Extracted Ads</h4>
+                                    <p class="category" id="extractedCount">00</p>
+                                </div>
+                                <div class="content">
 
-                            <div class="content table-responsive table-full-width">
-                                <table class="table table-hover table-striped">
-                                    <thead>
-                                    <th>
-                                        <input type="checkbox" id="chkAll" >
-                                    </th>
-                                    <th>Title</th>
-                                    </thead>
-                                    <tbody id="trAds">
+                                    <div class="content table-responsive table-full-width">
+                                        <table class="table table-hover table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>
+                                                    <input type="checkbox" id="chkAll" >
+                                                </th>
 
-                                    </tbody>
-                                </table>
+                                                <th>Title</th>
+                                                <th>Date</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="trAds">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
+
             </div>
 
         </div>
     </div>
-
 
     <footer class="footer">
         <div class="container-fluid">
@@ -275,6 +306,8 @@
 
     $(document).ready(function(){
 
+        $("#rightSide").css('max-height',$("#leftSide").height()).css('overflow','scroll');
+
         $("#txtMessage").val('');
 
         $("#btnExtractAds").click(function() {
@@ -285,23 +318,7 @@
                 $("#lblAds").html(0);
                 $("#lblPages").html(0);
 
-                $("#msg").html('Searching for ads..');
-
-                $.get('/http_get/',{ text:val },function(response){
-                    if(response){
-
-                        var parsed = $.parseJSON(response);
-
-                        parsedParms = parsed;
-
-                        $("#lblAds").html(parsed.total);
-                        $("#lblPages").html(parsed.pages);
-
-                        $("#msg").html('Searching for ads completed..');
-
-                        extractAds(response);
-                    }
-                });
+                searchAds(val);
             }
         });
 
@@ -331,34 +348,81 @@
 
     });
 
+    function searchAds(keywords){
+
+        setButtonsStatus(true,true,false);
+
+        $("#trAds").empty();
+
+        $.ajax({
+            type: "GET",
+            url: '/search_ads',
+            data:{ text:keywords },
+            success: function(response){
+
+                if(response){
+
+                    var parsed = $.parseJSON(response);
+
+                    parsedParms = parsed;
+
+                    $("#lblAds").html(parsed.total);
+                    $("#lblPages").html(parsed.pages);
+
+                    if(parsed.db == 0){
+                        extractAds(response);
+                    }
+                    else{
+                        getAds();
+                    }
+                    setButtonsStatus(false,false,true);
+
+                }
+                else{
+                    setButtonsStatus(false,false,true);
+                }
+
+
+            },
+            error: function(){
+                setButtonsStatus(false,false,true);
+            }
+        });
+
+    };
+
+    function setButtonsStatus(post,extract, cancelextract){
+        $("#btnPostMessage").attr('disabled',post);
+        $("#btnExtractAds").attr('disabled',extract);
+        $("#btnCancelExtractAds").attr('disabled',cancelextract);
+    };
+
     function postComment(ads, msessage){
 
         $("#msg").html('Posting Comments..');
 
         $.get('/post_comment',{ ads:ads, message:msessage }, function(response){
-             $("#msg").html(response + ' Comments posted..');
+            $("#msg").html(response + ' Comments posted..');
             alert('comments posted..');
         });
     }
 
-
     function extractAds(params){
 
         ads_inerval = setInterval(getAds, 5000);
-
-        $("#msg").html('Extracting ads..');
 
         $.ajax({
             type: "GET",
             url: '/extract_ads',
             data:{ params:params },
             success: function(response){
-                $("#msg").html(response +  ' ads extracted..');
-
                 clearInterval(ads_inerval);
                 getAds();
+                setButtonsStatus(false,false,true);
             },
-            error: function(){}
+            error: function(){
+                setButtonsStatus(false,false,true);
+            }
         });
 
     };
@@ -372,8 +436,16 @@
 
             $.each(parsed,function(i,item){
 
-                var chk  = "<input type='checkbox' class='chkAd' id='"+item.pk+"' >"
-                var tr = '<tr><td>'+chk+'</td><td>'+item['fields'].text+'</tr>'
+                var chk  = "<input type='checkbox' class='chkAd' id='"+item.pk+"' >";
+
+                var url = 'https://www.gumtree.sg'+item['fields'].url;
+
+                var tr = '<tr>';
+                tr +='<td>'+chk+'</td>';
+                tr += '<td><a href="'+url+'" target="_blank" class="small" >'+item['fields'].text+'</a></td>';
+                tr += '<td>'+item['fields'].posted+'</td>';
+                tr += '</tr>'
+
                 $("#trAds").append(tr);
             });
 

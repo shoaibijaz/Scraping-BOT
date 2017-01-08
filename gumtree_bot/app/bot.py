@@ -9,71 +9,102 @@ class ScrapAds():
 
     def search_status(self, text):
 
-        total,pages= 0,0
+        total, pages, db = 0, 0 ,0
 
-        url = self.make_url(text,1)
-        r = requests.get(url)
+        try:
+            if SearchLog.count_keyword(text) > 0:
+                search_log = SearchLog.first_by_keyword(text)
+                total = search_log.ads_count
+                pages = search_log.pages
+                db = 1
+                log_id = search_log.id
 
-        search_log = SearchLog(text=text,url=url)
-        search_log.save()
+                return { 'total':total, 'pages':pages, "log":log_id, "q":text, "db":db }
 
-        if r.status_code==200:
-            content = r.text
+            url = self.make_url(text,1)
+            r = requests.get(url)
 
-            if 'Sorry, but we didn’t find any results. Below you can find some tips to help you in your search.' not in content:
-                soup = BeautifulSoup(content)
+            search_log = SearchLog(text=text,url=url, source='manual',request_type='requests')
+            search_log.save()
 
-                total = soup.find('span', { "class":'count' }).text.replace('ads','').replace(',','').strip()
+            if r.status_code==200:
+                content = r.text
 
-                pages = 1
+                if 'Sorry, but we didn’t find any results. Below you can find some tips to help you in your search.' not in content:
+                    soup = BeautifulSoup(content)
 
-                last_page = soup.find('a', { "class":'last follows' })
+                    total = soup.find('span', { "class":'count' }).text.replace('ads','').replace(',','').strip()
 
-                if last_page:
-                    href = last_page['href'].split('/')
-                    pages = int(href[len(href)-1].replace('v1q0p','').strip())
+                    pages = 1
 
-        response = {'total':total, 'pages':pages, "log":search_log.id, "q":text}
+                    last_page = soup.find('a', { "class":'last follows' })
 
-        return json.dumps(response)
+                    if last_page:
+                        href = last_page['href'].split('/')
+                        pages = int(href[len(href)-1].replace('v1q0p','').strip())
+
+            search_log.ads_count = total
+            search_log.pages = pages
+            search_log.save()
+
+            return { 'total':total, 'pages':pages, "log":search_log.id, "q":text, "db":db }
+
+        except Exception as ex:
+            print(ex)
+            return { 'total':0, 'pages':0, "log":-1, "q":text, "db":0 }
 
     def all_ads(self, params):
 
-        parsed = json.loads(params)
+        try:
+            parsed = json.loads(params)
 
-        text = parsed['q']
-        pages = parsed['pages']
+            text = parsed['q']
+            pages = parsed['pages']
 
-        search_log = SearchLog.objects.get(pk=parsed['log'])
+            search_log = SearchLog.objects.get(pk=parsed['log'])
 
-        count = 0
+            count = 0
 
-        for num in range(1,pages+1):
+            for num in range(1,pages+1):
 
-            ads_logs = []
+                ads_logs = []
 
-            url = self.make_url(text,num)
-            r = requests.get(url)
+                url = self.make_url(text,num)
+                r = requests.get(url)
 
-            if r.status_code == 200:
+                if r.status_code == 200:
 
-                soup = BeautifulSoup(r.text)
-                ads = soup.find_all('a', { "class":'href-link' })
+                    soup = BeautifulSoup(r.text)
 
-                for ad in ads:
-                    ad_log = AdsLog(search=search_log,text=ad.text,url=ad['href'])
-                    ads_logs.append(ad_log)
-                    count += 1
+                    ads = soup.find_all('div', { "class":'container' })
 
-            AdsLog.objects.bulk_create(ads_logs)
+                    for ad in ads:
+                        link = ad.find("a",'href-link')
+                        posted_date = ad.find("div",{"class","creation-date"}).find_all("span",'')[1].text
+                        published_in = ad.find("div",{"class","category-location"}).find("span").text
 
-            if count >= 100:
-                return count
+                        ad_log = AdsLog(search=search_log,text=link.text,url=link['href'])
+                        ad_log.posted = posted_date
+                        ad_log.published_in = published_in
 
-        return count
+                        ads_logs.append(ad_log)
+                        count += 1
+
+                AdsLog.objects.bulk_create(ads_logs)
+
+                slee
+
+                if count >= 100:
+                    return count
+
+            return count
+
+        except Exception as ex:
+            print(ex)
+            return 0
 
     @classmethod
-    def make_url(self, text, page):
+    def make_url(cls, text, page):
 
         text =re.sub( '\s+', ' ', text ).strip().replace(' ','+')
 

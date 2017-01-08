@@ -55,7 +55,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'gumtree_bot.urls'
 
 
-TEMPLATE_DIRS = (
+_TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates').replace('\\','/'),
     os.path.join(PROJECT_ROOT, 'templates').replace('\\','/'),
 )
@@ -63,7 +63,7 @@ TEMPLATE_DIRS = (
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': TEMPLATE_DIRS,
+        'DIRS': _TEMPLATE_DIRS,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
