@@ -1,0 +1,52 @@
+[
+  {
+    "model": "app.Websites",
+    "pk": 1,
+    "fields": {
+      "name": "Gumtree Singapore",
+      "url": "https://www.gumtree.sg/",
+      "function":"gumtree_1",
+      "search_url":"https://www.gumtree.sg/s-{search}/page-{page}/v1q0p{page}"
+    }
+  },
+    {
+    "model": "app.Websites",
+    "pk": 2,
+    "fields": {
+      "name": "Gumtree Ireland",
+      "url": "https://www.gumtree.ie/",
+      "function":"gumtree_1",
+      "search_url":"https://www.gumtree.ie/s-{search}/page-{page}/v1q0p{page}"
+    }
+  },
+    {
+    "model": "app.Websites",
+    "pk": 3,
+    "fields": {
+      "name": "Gumtree South Africa",
+      "url": "https://www.gumtree.co.za/",
+      "function":"gumtree_1",
+      "search_url":"https://www.gumtree.co.za/s-{search}/page-{page}/v1q0p{page}"
+    }
+  },
+     {
+    "model": "app.Websites",
+    "pk": 4,
+    "fields": {
+      "name": "Gumtree UK",
+      "url": "https://www.gumtree.com/",
+      "function":"gumtree_2",
+      "search_url":"https://www.gumtree.com/search?search_category=all&search_location=uk&q={search}&page={page}"
+    }
+  },
+     {
+    "model": "app.Websites",
+    "pk": 5,
+    "fields": {
+      "name": "Gumtree Australia",
+      "url": "http://www.gumtree.com.au/",
+      "function":"gumtree_3",
+      "search_url":"http://www.gumtree.com.au/s-search/page-{page}/k0?categoryRedirected=true"
+    }
+  }
+]

@@ -12,15 +12,16 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='AdsComment',
+            name='Proxies',
             fields=[
-                ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
-                ('text', models.TextField()),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('IP', models.TextField(null=True, blank=True)),
+                ('port', models.TextField(null=True, blank=True)),
+                ('country', models.TextField(null=True, blank=True)),
                 ('create_date', models.DateTimeField(auto_now_add=True)),
-                ('ad', models.ForeignKey(to='app.AdsLog', related_name='Comments')),
             ],
             options={
-                'db_table': 'app_ads_comment',
+                'db_table': 'app_proxies',
             },
         ),
     ]

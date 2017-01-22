@@ -5,6 +5,7 @@ from django.core import serializers
 from app.bot import ScrapAds
 from app.models import *
 from app.bot_post import *
+from app.forms import *
 
 import json
 
@@ -13,16 +14,27 @@ class DashboardView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
+        context['form'] = SearchForm()
+
         return self.render_to_response(context)
+
+
+
+    def post(self, request, *args, **kwargs):
+        context = super(DashboardView, self).get_context_data(**kwargs)
+
+        context['form'] = SearchForm(request.POST)
+
+        print(context['form'])
+        return HttpResponse(1)
 
 
 class SearchAds(View):
 
     def get(self, request, *args, **kwargs):
+        context = super(SearchAds, self).get_context_data(**kwargs)
         url = request.GET.get('text', None)
         response = ScrapAds().search_status(url)
-
-        return HttpResponse(json.dumps(response))
 
 
 class ExtractAds(View):

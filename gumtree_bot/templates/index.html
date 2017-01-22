@@ -101,176 +101,205 @@
 
 <div class="main-panel">
 
-    <div class="content">
-        <div class="container-fluid">
+<div class="content">
+    <div class="container-fluid">
 
-            <div class="row">
+        <div class="row">
 
-                <div class="col-md-6" id="leftSide">
+            <div class="col-md-6" id="leftSide">
 
-                    <div class="row">
-                        <div class="card">
-                            <div class="header">
-                                <h4 class="title">Ads Scraper
-
-                                </h4>
-                            </div>
-                            <div class="content">
-
-                                <form>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Keywords</label>
-                                                <input type="text" class="form-control" id="txtQ" placeholder="Enter keywords" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-
-                                        <div class="col-md-12 text-right">
-
-                                            <button type="button" id="btnExtractAds" class="btn btn-info btn-fill btn-sm">Extract Ads</button>
-
-                                            &nbsp;
-
-                                            <button type="button" id="btnCancelExtractAds" disabled="" class="btn btn-warning btn-fill btn-sm">Stop/Cancel</button>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="clearfix"></div>
-
-                                    <div class="footer">
-
-                                        <hr>
-                                        <div class="legend">
-                                            <i class="fa fa-circle text-info"></i> Ads(<span id="lblAds">0</span>)
-                                            <i class="fa fa-circle text-warning"></i> Pages(<span id="lblPages">0</span>)
-                                        </div>
-                                    </div>
-
-                                    <div class="clearfix"></div>
-                                </form>
-                            </div>
+                <div class="">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">
+                                Ads Scraper
+                            </h4>
                         </div>
-                    </div>
+                        <div class="content">
 
-                    <div class="row">
-                        <div class="card">
-                            <div class="header">
-                                <h4 class="title">Post Message</h4>
-                                <p class="category"></p>
-                            </div>
-                            <div class="content">
+                            <form action="{% url 'home' %}" method="post" id="fmSearchAds">
 
-                                <form>
-                                    <div class="row">
-                                        <div class="col-md-12">
+                                {% csrf_token %}
 
-                                            <div>
-                                                <input type="checkbox">    I'm interested. Please contact me.
-                                            </div>
-                                            <div>
-                                                <input type="checkbox">    When and where can I see it?
-                                            </div>
-                                            <div class="form-group">
-                                                <textarea class="form-control" id="txtMessage" placeholder="Enter message" >
-                                                </textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="txtName" placeholder="Enter Name" >
-                                            </div>
-
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="txtEmail" placeholder="Enter Email" >
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="txtPhone" placeholder="Enter Phone" >
-                                            </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Website</label>
+                                            {{ form.website }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Proxy</label>
+                                            {{ form.proxy }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Negative Keywords</label>
+                                            {{ form.negative }}
                                         </div>
                                     </div>
 
-                                    <button type="button" id="btnPostMessage" class="btn btn-info btn-fill pull-right">Send Message</button>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Keywords</label>
+                                            {{ form.keywords }}
+                                        </div>
+                                    </div>
+                                </div>
 
-                                    <div class="clearfix"></div>
-                                </form>
-                            </div>
+                                <div class="row">
+
+                                    <div class="col-md-12 text-right">
+
+                                        <button type="button" id="btnExtractAds" class="btn btn-info btn-fill btn-sm">Extract Ads</button>
+
+                                        &nbsp;
+
+                                        <button type="button" id="btnCancelExtractAds" disabled="" class="btn btn-warning btn-fill btn-sm">Stop/Cancel</button>
+
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+
+                                <div class="footer">
+
+                                    <hr>
+                                    <div class="legend">
+                                        <i class="fa fa-circle text-info"></i> Ads(<span id="lblAds">0</span>)
+                                        <i class="fa fa-circle text-warning"></i> Pages(<span id="lblPages">0</span>)
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+                            </form>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-6" id="rightSide">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="header">
-                                    <h4 class="title">Extracted Ads</h4>
-                                    <p class="category" id="extractedCount">00</p>
-                                </div>
-                                <div class="content">
 
-                                    <div class="content table-responsive table-full-width">
-                                        <table class="table table-hover table-striped">
-                                            <thead>
-                                            <tr>
-                                                <th>
-                                                    <input type="checkbox" id="chkAll" >
-                                                </th>
+            </div>
 
-                                                <th>Title</th>
-                                                <th>Date</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="trAds">
+            <div class="col-md-6" id="rightSide">
 
-                                            </tbody>
-                                        </table>
+                <div class="">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Post Message</h4>
+                            <p class="category"></p>
+                        </div>
+                        <div class="content">
+
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <div>
+                                            <input type="checkbox">    I'm interested. Please contact me.
+                                        </div>
+                                        <div>
+                                            <input type="checkbox">    When and where can I see it?
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea class="form-control" id="txtMessage" placeholder="Enter message" >
+                                            </textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="txtName" placeholder="Enter Name" >
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="txtEmail" placeholder="Enter Email" >
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="txtPhone" placeholder="Enter Phone" >
+                                        </div>
                                     </div>
+                                </div>
+
+                                <button type="button" id="btnPostMessage" class="btn btn-info btn-fill pull-right">Send Message</button>
+
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Extracted Ads</h4>
+                                <p class="category" id="extractedCount">00</p>
+                            </div>
+                            <div class="content">
+
+                                <div class="content table-responsive table-full-width">
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>
+                                                <input type="checkbox" id="chkAll" >
+                                            </th>
+
+                                            <th>Title</th>
+                                            <th>Date</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="trAds">
+
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
             </div>
 
         </div>
-    </div>
 
-    <footer class="footer">
-        <div class="container-fluid">
-            <nav class="pull-left">
-                <ul>
-                    <li>
-                        <a href="#">
-                            Home
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Company
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Portfolio
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Blog
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <p class="copyright pull-right">
-                &copy; 2016 <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
-            </p>
-        </div>
-    </footer>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container-fluid">
+        <nav class="pull-left">
+            <ul>
+                <li>
+                    <a href="#">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Company
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Portfolio
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Blog
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <p class="copyright pull-right">
+            &copy; 2016 <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
+        </p>
+    </div>
+</footer>
 
 </div>
 </div>
@@ -291,8 +320,9 @@
 <!--  Notifications Plugin    -->
 <script src="{{ STATIC_PREFIX }}assets/js/bootstrap-notify.js"></script>
 
-<!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<!--  Ajax Form Plugin    -->
+<script src="{{ STATIC_PREFIX }}assets/js/jquery.form.min.js"></script>
+
 
 <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 <script src="{{ STATIC_PREFIX }}assets/js/light-bootstrap-dashboard.js"></script>
@@ -306,20 +336,24 @@
 
     $(document).ready(function(){
 
-        $("#rightSide").css('max-height',$("#leftSide").height()).css('overflow','scroll');
+        $("select, input[type='text']").addClass('form-control');
+
+        var options = {
+
+            beforeSubmit:  function(){},  // pre-submit callback
+            success:       function(response){
+
+            }
+        };
+
+        $("#fmSearchAds").ajaxForm(options);
 
         $("#txtMessage").val('');
 
         $("#btnExtractAds").click(function() {
-            var val = $("#txtQ").val().trim().replace(' ','+');
 
-            if(val) {
+            $("#fmSearchAds").submit();
 
-                $("#lblAds").html(0);
-                $("#lblPages").html(0);
-
-                searchAds(val);
-            }
         });
 
         $("#chkAll").change(function(){
