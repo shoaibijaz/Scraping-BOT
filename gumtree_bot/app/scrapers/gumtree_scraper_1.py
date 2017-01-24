@@ -5,33 +5,40 @@ import re
 from bs4 import BeautifulSoup
 from app.models import *
 
-class ScrapAds():
 
-    def search_status(self, text):
+class ScraperResponse:
+    total_pages = 1
+    log_id = None
+    total_ads = 0
 
-        total, pages, db = 0, 0 ,0
+    def __init__(self):
+      pass
+
+    def __init__(self, pages, log, ads):
+        self.total_pages = pages
+        self.log_id = log
+        self.total_ads = ads
+
+    def to_json(self):
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+
+
+class GumtreeScraperOne:
+
+    @classmethod
+    def validate_search(cls, form_data):
 
         try:
-            if SearchLog.count_keyword(text) > 0:
-                search_log = SearchLog.first_by_keyword(text)
-                total = search_log.ads_count
-                pages = search_log.pages
-                db = 1
-                log_id = search_log.id
 
-                return { 'total':total, 'pages':pages, "log":log_id, "q":text, "db":db }
-
-            url = self.make_url(text,1)
+            website = form_data['website']
+            url = website.search_url.format(page=1, search=form_data['keywords'])
             r = requests.get(url)
 
-            search_log = SearchLog(text=text,url=url, source='manual',request_type='requests')
-            search_log.save()
-
-            if r.status_code==200:
+            if r.status_code == 200:
                 content = r.text
 
                 if 'Sorry, but we didn’t find any results. Below you can find some tips to help you in your search.' not in content:
-                    soup = BeautifulSoup(content)
+                    soup =BeautifulSoup(content, "html.parser")
 
                     total = soup.find('span', { "class":'count' }).text.replace('ads','').replace(',','').strip()
 
@@ -41,17 +48,19 @@ class ScrapAds():
 
                     if last_page:
                         href = last_page['href'].split('/')
-                        pages = int(href[len(href)-1].replace('v1q0p','').strip())
+                        pages = int(href[len(href)-1].replace('v1q0p', '').strip())
 
-            search_log.ads_count = total
-            search_log.pages = pages
-            search_log.save()
+                    print(url)
+                    search_log = SearchLog().save_item(formData=form_data,pages=pages,ads=total)
 
-            return { 'total':total, 'pages':pages, "log":search_log.id, "q":text, "db":db }
+                    response = ScraperResponse(pages,search_log.id, total)
+
+                    return response.to_json()
+
+            return ScraperResponse(0,0,0)
 
         except Exception as ex:
-            print(ex)
-            return { 'total':0, 'pages':0, "log":-1, "q":text, "db":0 }
+            raise ex
 
     def all_ads(self, params):
 
@@ -83,15 +92,16 @@ class ScrapAds():
                         posted_date = ad.find("div",{"class","creation-date"}).find_all("span",'')[1].text
                         published_in = ad.find("div",{"class","category-location"}).find("span").text
 
-                        ad_log = SearchLog()
+                        ad_log = AdsLog(search=search_log,text=link.text,url=link['href'])
                         ad_log.posted = posted_date
                         ad_log.published_in = published_in
 
                         ads_logs.append(ad_log)
                         count += 1
 
-                search_log.objects.bulk_create(ads_logs)
+                AdsLog.objects.bulk_create(ads_logs)
 
+                slee
 
                 if count >= 100:
                     return count
@@ -105,7 +115,7 @@ class ScrapAds():
     @classmethod
     def make_url(cls, text, page):
 
-        text =re.sub( '\s+', ' ', text ).strip().replace(' ','+')
+        text = re.sub('\s+', ' ', text).strip().replace(' ','+')
 
         url = 'https://www.gumtree.sg/s-'+ text
 
@@ -115,4 +125,4 @@ class ScrapAds():
             page = str(page)
             url += '/page-'+ page + "/v1q0p" + page
 
-        return  url
+        return url

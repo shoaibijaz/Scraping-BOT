@@ -11,11 +11,11 @@ class WebDriver():
 
     def post_comments(self,ads,message):
 
-        adsObject = AdsLog.objects.filter(id__in=ads.split(','))
+        adsObject = SearchLog()
 
         count = 0
         for item in adsObject:
-            ad_comment= AdsComment()
+            ad_comment= SearchLog()
             ad_comment.ad = item
             ad_comment.text = message
 

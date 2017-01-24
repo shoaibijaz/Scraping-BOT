@@ -8,6 +8,9 @@ from app.views import *
 
 urlpatterns = (
     url(r'^$', DashboardView.as_view(), name='home'),
+    url(r'^scraper/$', ScraperView.as_view(), name='scraper'),
+    url(r'^scraper/(?P<id>\d+)/$', (ScraperView.as_view()), name='scraper'),
+    url(r'^scraper_form/$', ScraperForm.as_view(), name='scraper-form'),
     url(r'^search_ads/$', SearchAds.as_view(), name='search-ads'),
     url(r'^extract_ads/$', ExtractAds.as_view(), name='extract'),
     url(r'^get_ads_list/$', GetAdsList.as_view(), name='ads_list'),

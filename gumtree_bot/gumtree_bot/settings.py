@@ -101,7 +101,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -125,3 +125,16 @@ DATABASES = {
         'PORT': '5432',
         },
 }
+
+DATABASES = {
+    'default': {
+        'NAME': 'gumtree',
+        'ENGINE': 'mysql.connector.django',
+        'USER': 'root',
+        'PASSWORD': 'matrix1',
+        'OPTIONS': {
+          'autocommit': True,
+        },
+    }
+}
+

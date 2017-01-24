@@ -59,3 +59,23 @@
 .table-upgrade td:nth-child(3){
     text-align: center;
 }
+form .error {
+    color: #ed2222;
+    text-transform: lowercase;
+}
+
+.loader{
+    width: 500px;height: 438px;position: absolute;top: 0;background: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+}
+.loader img {
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto; /* presto! */
+
+}

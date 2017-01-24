@@ -1,0 +1,299 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="row">
+
+        <div class="col-md-6" id="scraperForm">
+
+        </div>
+
+        <div class="col-md-6" id="rightSide">
+
+            <div class="">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Post Message</h4>
+                        <p class="category"></p>
+                    </div>
+                    <div class="content">
+
+                        <form>
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div>
+                                        <input type="checkbox">    I'm interested. Please contact me.
+                                    </div>
+                                    <div>
+                                        <input type="checkbox">    When and where can I see it?
+                                    </div>
+                                    <div class="form-group">
+                                            <textarea class="form-control" id="txtMessage" placeholder="Enter message" >
+                                            </textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="txtName" placeholder="Enter Name" >
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="txtEmail" placeholder="Enter Email" >
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="txtPhone" placeholder="Enter Phone" >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" id="btnPostMessage" class="btn btn-info btn-fill pull-right">Send Message</button>
+
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Extracted Ads</h4>
+                            <p class="category" id="extractedCount">00</p>
+                        </div>
+                        <div class="content">
+
+                            <div class="content table-responsive table-full-width">
+                                <table class="table table-hover table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" id="chkAll" >
+                                        </th>
+
+                                        <th>Title</th>
+                                        <th>Date</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="trAds">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+    <!-- Scraping Custom Scripts! -->
+    <script src="{{ STATIC_PREFIX }}assets/scripts/scraper.js"></script>
+
+
+    <script type="text/javascript">
+
+        var $scraper;
+
+        var parsedParms, ads_inerval;
+
+
+        function loaderDIV() {
+
+            var src = '{{ STATIC_PREFIX }}assets/img/loader.gif';
+
+            var dv  = $("<div />", { class:'loader' });
+            var img = $("<img />", { src:src });
+
+            dv.html(img);
+
+            var target = $("#scraperForm");
+
+            target.css('position','relative');
+
+            dv.css({width:target.width(), height:target.height()});
+
+            target.append(dv);
+        }
+        $(document).ready(function(){
+
+            $scraper = new $.Scraper({
+                logID:'{{ id }}',
+                getScraperFormURL:'{% url 'scraper-form' %}',
+                scraperFormDIV:'#scraperForm',
+                scraperForm:'#fmScrapAds',
+                scraperPageURL:'{% url 'scraper' %}'
+            });
+
+            var options = {
+                beforeSubmit:  function(){},  // pre-submit callback
+                success:       function(response){
+                    alert(response);
+                }
+            };
+
+            $("#fmSearchAds").ajaxForm(options);
+
+            $("#txtMessage").val('');
+
+            $("#btnExtractAds").click(function() {
+
+                $("#fmSearchAds").submit();
+
+            });
+
+            $("#chkAll").change(function(){
+
+                var checked = $(this).is(':checked');
+
+                $(".chkAd").prop('checked',checked);
+
+            });
+
+            $("#btnPostMessage").click(function(){
+                var ads = [];
+
+                $(".chkAd").each(function(){
+                    var checked = $(this).is(':checked');
+
+                    if(checked){
+                        ads.push($(this).attr('id'))
+                    }
+                });
+
+                if($("#txtMessage").val().trim() && ads.length>0){
+                    postComment(ads.join(),$("#txtMessage").val())
+                }
+            });
+
+        });
+
+        function searchAds(keywords){
+
+            setButtonsStatus(true,true,false);
+
+            $("#trAds").empty();
+
+            $.ajax({
+                type: "GET",
+                url: '/search_ads',
+                data:{ text:keywords },
+                success: function(response){
+
+                    if(response){
+
+                        var parsed = $.parseJSON(response);
+
+                        parsedParms = parsed;
+
+                        $("#lblAds").html(parsed.total);
+                        $("#lblPages").html(parsed.pages);
+
+                        if(parsed.db == 0){
+                            extractAds(response);
+                        }
+                        else{
+                            getAds();
+                        }
+                        setButtonsStatus(false,false,true);
+
+                    }
+                    else{
+                        setButtonsStatus(false,false,true);
+                    }
+
+
+                },
+                error: function(){
+                    setButtonsStatus(false,false,true);
+                }
+            });
+
+        };
+
+        function setButtonsStatus(post,extract, cancelextract){
+            $("#btnPostMessage").attr('disabled',post);
+            $("#btnExtractAds").attr('disabled',extract);
+            $("#btnCancelExtractAds").attr('disabled',cancelextract);
+        };
+
+        function postComment(ads, msessage){
+
+            $("#msg").html('Posting Comments..');
+
+            $.get('/post_comment',{ ads:ads, message:msessage }, function(response){
+                $("#msg").html(response + ' Comments posted..');
+                alert('comments posted..');
+            });
+        }
+
+        function extractAds(params){
+
+            ads_inerval = setInterval(getAds, 5000);
+
+            $.ajax({
+                type: "GET",
+                url: '/extract_ads',
+                data:{ params:params },
+                success: function(response){
+                    clearInterval(ads_inerval);
+                    getAds();
+                    setButtonsStatus(false,false,true);
+                },
+                error: function(){
+                    setButtonsStatus(false,false,true);
+                }
+            });
+
+        };
+
+        function getAds(){
+
+            $.get('/get_ads_list',{log_id:parsedParms.log},function(response){
+
+                var parsed = $.parseJSON(response);
+                $("#extractedCount").html(parsed.length);
+
+                $.each(parsed,function(i,item){
+
+                    var chk  = "<input type='checkbox' class='chkAd' id='"+item.pk+"' >";
+
+                    var url = 'https://www.gumtree.sg'+item['fields'].url;
+
+                    var tr = '<tr>';
+                    tr +='<td>'+chk+'</td>';
+                    tr += '<td><a href="'+url+'" target="_blank" class="small" >'+item['fields'].text+'</a></td>';
+                    tr += '<td>'+item['fields'].posted+'</td>';
+                    tr += '</tr>'
+
+                    $("#trAds").append(tr);
+                });
+
+
+            });
+        }
+
+        function no(){
+            $.notify({
+                icon: 'pe-7s-gift',
+                message: "Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for every web developer."
+
+            },{
+                type: 'info',
+                timer: 4000
+            });
+
+        }
+
+
+
+    </script>
+{% endblock %}
+

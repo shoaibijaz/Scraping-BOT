@@ -1,6 +1,7 @@
 from django import forms
 from .models import *
 
+
 class SearchForm(forms.Form):
     id = forms.IntegerField(widget = forms.HiddenInput, required=False)
     keywords = forms.CharField(max_length=200,required=True,initial='')
@@ -8,6 +9,8 @@ class SearchForm(forms.Form):
     negative = forms.CharField(max_length=200,required=True,initial='')
     start_time = forms.CharField(max_length=50,required=False, initial='')
     end_time = forms.CharField(max_length=50,required=False, initial='')
+    ads = forms.IntegerField(initial=0)
+    pages = forms.IntegerField(initial=0)
 
     website = forms.ModelChoiceField(
         queryset=Websites.objects.all() ,
