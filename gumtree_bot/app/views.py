@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView,View
+from django.views.generic import TemplateView, View, ListView
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 
@@ -32,11 +32,11 @@ class ScraperView(TemplateView):
         return self.render_to_response(context)
 
 
-class ScraperForm(TemplateView):
+class ScraperFormView(TemplateView):
     template_name = "shared/scraper_form.html"
 
     def get(self, request, *args, **kwargs):
-        context = super(ScraperForm, self).get_context_data(**kwargs)
+        context = super(ScraperFormView, self).get_context_data(**kwargs)
 
         id = request.GET.get('id',0)
 
@@ -59,7 +59,7 @@ class ScraperForm(TemplateView):
         return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
-        context = super(ScraperForm, self).get_context_data(**kwargs)
+        context = super(ScraperFormView, self).get_context_data(**kwargs)
 
         try:
 
@@ -70,7 +70,7 @@ class ScraperForm(TemplateView):
             if form.is_valid():
                 data = form.cleaned_data
                 json_response.status = JSONResponse.SUCCESS_STATUS
-                json_response.data = Scraper.scrap_data(data)
+                json_response.data = Scraper.validate_data(data)
             else:
                 json_response = json_response.form_error_response(form)
 
@@ -81,34 +81,103 @@ class ScraperForm(TemplateView):
             return HttpResponse(json_response.to_json())
 
 
-class SearchAds(TemplateView):
-
-    def get(self, request, *args, **kwargs):
-        context = super(SearchAds, self).get_context_data(**kwargs)
-        url = request.GET.get('text', None)
-        response = ScrapAds().search_status(url)
-
-
-class ExtractAds(View):
+class ExtractAdsView(View):
 
     def get(self, request, *args, **kwargs):
 
-        params = request.GET.get('params', None)
+        try:
+            log_id = request.GET.get('id', 0)
+            task_id = request.GET.get('task', 0)
 
-        ScrapAds().all_ads(params)
+            json_response = JSONResponse()
 
-        return HttpResponse(1)
+            if log_id and int(log_id) > 0:
+                json_response.data = Scraper.scrap_data(log_id, task_id)
+                json_response.status = JSONResponse.SUCCESS_STATUS
+            else:
+                json_response = json_response.form_invalid_response('Please provide valid search ID.')
+
+            return HttpResponse(json_response.to_json())
+
+        except Exception as ex:
+            json_response = JSONResponse().exception_response(str(ex))
+            return HttpResponse(json_response.to_json())
 
 
-class GetAdsList(View):
+class StopExtractAdsView(View):
 
     def get(self, request, *args, **kwargs):
 
-        log_id = request.GET.get('log_id', None)
+        try:
+            log_id = request.GET.get('id', 0)
+            task_id = request.GET.get('task', 0)
 
-        ads = SearchLog.objects.get(pk=log_id).ads.all()
+            json_response = JSONResponse()
 
-        return HttpResponse(serializers.serialize('json',ads))
+            if log_id and int(log_id) > 0 and task_id and int(task_id) > 0:
+                task = Tasks.objects.get(pk=int(task_id))
+                task.update_status(Tasks.STOPPED_STATUS)
+                json_response.data = 1
+                json_response.status = JSONResponse.SUCCESS_STATUS
+            else:
+                json_response = json_response.form_invalid_response('Please provide valid search ID.')
+
+            return HttpResponse(json_response.to_json())
+
+        except Exception as ex:
+            json_response = JSONResponse().exception_response(str(ex))
+            return HttpResponse(json_response.to_json())
+
+
+class CreateTaskView(View):
+
+    def get(self, request, *args, **kwargs):
+
+        try:
+            log_id = request.GET.get('id', 0)
+
+            json_response = JSONResponse()
+
+            if log_id and int(log_id) > 0:
+                json_response.data = Tasks.save_item(log_id,Tasks.PENDING_STATUS).id
+                json_response.status = JSONResponse.SUCCESS_STATUS
+            else:
+                json_response = json_response.form_invalid_response('Please provide valid search ID.')
+
+            return HttpResponse(json_response.to_json())
+
+        except Exception as ex:
+            json_response = JSONResponse().exception_response(str(ex))
+            return HttpResponse(json_response.to_json())
+
+
+class GetAdsListView(ListView):
+    template_name = 'shared/fetched_ads_list.html'
+    context_object_name = 'items_list'
+
+    def get_queryset(self):
+
+        try:
+            task_id = self.request.GET.get('id',0)
+
+            return FetchedAds.objects.filter(task_id=int(task_id))
+
+        except Exception as ex:
+            raise ex
+
+
+class CommentFormView(TemplateView):
+    template_name = "shared/comment_form.html"
+
+    def get(self, request, *args, **kwargs):
+        context = super(CommentFormView, self).get_context_data(**kwargs)
+
+        context['form'] = CommentForm()
+
+        return self.render_to_response(context)
+
+    def post(self, request, *args, **kwargs):
+        context = super(CommentFormView, self).get_context_data(**kwargs)
 
 
 class PostCommentView(View):

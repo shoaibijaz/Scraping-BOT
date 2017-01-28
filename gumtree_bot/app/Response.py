@@ -27,3 +27,10 @@ class JSONResponse:
         self.message = 'form validation failed'
         self.form_errors = form.errors.as_json()
         return self
+
+    def form_invalid_response(self, message):
+        self.status = self.ERROR_STATUS
+        self.data = None
+        self.message = message
+        self.form_errors = None
+        return self

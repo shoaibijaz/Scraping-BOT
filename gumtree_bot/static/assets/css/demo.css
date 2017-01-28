@@ -64,6 +64,11 @@ form .error {
     text-transform: lowercase;
 }
 
+.form-control.error {
+    background: #fff0f0
+}
+
+
 .loader{
     width: 500px;height: 438px;position: absolute;top: 0;background: #000;
     opacity: 0.5;

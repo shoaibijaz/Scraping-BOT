@@ -97,33 +97,98 @@ class SearchLog(models.Model):
 
 class Tasks(models.Model):
 
-    RUNNING_STATUS = 1
-    STOPPED_STATUS = 2
-    COMPLETE_STATUS = 3
+    PENDING_STATUS = 1
+    RUNNING_STATUS = 2
+    STOPPED_STATUS = 3
+    COMPLETE_STATUS = 4
+    ERROR_STATUS = 5
 
     STATUS_CHOICES = (
+        (PENDING_STATUS, 'Pending'),
         (RUNNING_STATUS, 'Running'),
         (STOPPED_STATUS, 'Stopped'),
         (COMPLETE_STATUS, 'Completed'),
+        (ERROR_STATUS, 'Error'),
     )
 
     search = models.ForeignKey(SearchLog,related_name='search_tasks')
     start_time = models.DateTimeField(blank=True)
     modified_time = models.DateTimeField(blank=True)
-    status = models.IntegerField(choices=STATUS_CHOICES,default=RUNNING_STATUS)
+    status = models.IntegerField(choices=STATUS_CHOICES,default=PENDING_STATUS)
+
+    def update_status(self, status):
+
+        self.modified_time = datetime.now()
+        self.status = status;
+        self.save()
 
     @classmethod
-    def save(cls, search_item):
+    def update_status_log_tasks(cls, search_log, status):
+        items = cls.objects.filter(search=search_log)
+
+        count = 0
+
+        for item in items:
+            item.status = status
+            item.modified_time = datetime.now()
+            item.save()
+            count += 1
+
+        return count
+
+    @classmethod
+    def save_item(cls, search_item, status):
         item = cls()
 
-        item.search = search_item
+        if type(search_item) is int or type(search_item) is str:
+            item.search_id = search_item
+        else:
+            item.search = search_item
+
         item.start_time = datetime.now()
         item.modified_time = datetime.now()
+        item.status = status
 
         item.save()
+
+        return item
 
     def __str__(self):
         return self.search
 
     class Meta:
         db_table = u'app_tasks'
+
+
+class FetchedAds(models.Model):
+
+    VISIBLE_STATUS = 1
+    DELETE_STATUS = 2
+    INVALID_STATUS = 3
+
+    STATUS_CHOICES = (
+        (VISIBLE_STATUS, 'VISIBLE'),
+        (VISIBLE_STATUS, 'SOFT DELETE'),
+        (INVALID_STATUS, 'INVALID'),
+    )
+
+    task = models.ForeignKey(Tasks,related_name='fetched_ads')
+
+    ad_id = models.TextField(blank=True, null=True)
+    link = models.TextField(blank=True, null=True)
+    name = models.TextField(blank=True, null= True)
+    posted_on = models.TextField(blank=True, null=True)
+    price = models.TextField(blank=True, null=True)
+    image = models.TextField(blank=True, null=True)
+    category = models.TextField(blank=True, null=True)
+    location = models.TextField(blank=True, null=True)
+    page = models.IntegerField(blank=True, null=True, default=0)
+    created_time = models.DateTimeField(blank=True)
+    modified_time = models.DateTimeField(blank=True)
+    status = models.IntegerField(choices=STATUS_CHOICES,default=VISIBLE_STATUS)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = u'app_fetched_ads'

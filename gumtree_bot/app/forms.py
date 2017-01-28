@@ -6,11 +6,11 @@ class SearchForm(forms.Form):
     id = forms.IntegerField(widget = forms.HiddenInput, required=False)
     keywords = forms.CharField(max_length=200,required=True,initial='')
     category = forms.CharField(max_length=200,required=False,initial='')
-    negative = forms.CharField(max_length=200,required=True,initial='')
+    negative = forms.CharField(max_length=200,required=False,initial='')
     start_time = forms.CharField(max_length=50,required=False, initial='')
     end_time = forms.CharField(max_length=50,required=False, initial='')
-    ads = forms.IntegerField(initial=0)
-    pages = forms.IntegerField(initial=0)
+    ads = forms.IntegerField(initial=0,required=False, widget= forms.HiddenInput)
+    pages = forms.IntegerField(initial=0,required=False, widget= forms.HiddenInput)
 
     website = forms.ModelChoiceField(
         queryset=Websites.objects.all() ,
@@ -23,3 +23,12 @@ class SearchForm(forms.Form):
         empty_label='Default',
         required=False
     )
+
+
+class CommentForm(forms.Form):
+    textarea_attr = {'placeholder': 'Message','class':'form-control', 'rows':6}
+    message = forms.CharField(max_length=100, required=True, initial='', widget=forms.Textarea(attrs=textarea_attr))
+    name = forms.CharField(max_length=100, required=True, initial='', widget=forms.TextInput(attrs={'placeholder': 'Name'}))
+    email = forms.CharField(max_length=100,required=True,initial='', widget=forms.TextInput(attrs={'placeholder': 'Email'}))
+    phone = forms.CharField(max_length=200,required=True,initial='', widget=forms.TextInput(attrs={'placeholder': 'Phone'}))
+    ads = forms.CharField(max_length=1000, required=False, initial='', widget=forms.HiddenInput)
