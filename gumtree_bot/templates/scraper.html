@@ -64,7 +64,9 @@
                 scraperPageURL:'{% url 'scraper' %}',
                 commentFormURL:'{% url 'comment-form' %}',
                 commentFormDIV:'#commentForm',
-                commentForm:'#fmPostComment'
+                commentForm:'#fmPostComment',
+                categoriesURL:'/api/categories',
+                categoriesDIV: '#categories_div'
             });
 
             var options = {
@@ -84,13 +86,6 @@
 
             });
 
-            $("#chkAll").change(function(){
-
-                var checked = $(this).is(':checked');
-
-                $(".chkAd").prop('checked',checked);
-
-            });
 
             $("#btnPostMessage").click(function(){
                 var ads = [];

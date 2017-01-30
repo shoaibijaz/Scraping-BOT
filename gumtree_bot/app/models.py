@@ -7,6 +7,9 @@ class Websites(models.Model):
     url = models.TextField(blank=True,null=True)
     function = models.TextField(blank=True,null=True)
     search_url = models.TextField(blank=True,null=True)
+    country = models.TextField(blank=True,null=True)
+    comment_url = models.TextField(blank=True,null=True)
+    order = models.IntegerField(null=True,default=0)
 
     def __str__(self):
         return self.name
@@ -20,6 +23,7 @@ class Categories(models.Model):
     name = models.TextField(blank=True, null=True)
     url = models.TextField(blank=True, null=True)
     parent = models.ForeignKey("self", null=True, blank=True)
+    order = models.IntegerField(default=0, null=True,blank=True)
 
     def __str__(self):
         return self.name
@@ -44,7 +48,6 @@ class Proxies(models.Model):
 
 class SearchLog(models.Model):
     keywords = models.TextField(blank=True,null=True)
-    category = models.TextField(blank=True,null=True)
     negative = models.TextField(blank=True,null=True)
     start_time = models.DateTimeField(blank=True,null=True)
     website = models.ForeignKey(Websites, blank=True, null=True)
@@ -52,6 +55,7 @@ class SearchLog(models.Model):
     type = models.TextField(blank=True, null=True)
     total_pages = models.IntegerField(default=0)
     total_ads = models.IntegerField(default=0)
+    category = models.ForeignKey(Categories, blank=True, null=True)
 
     @classmethod
     def get_safe_single(cls, item_id):
@@ -77,8 +81,11 @@ class SearchLog(models.Model):
             log.start_time = datetime.now()
             log.website = formData["website"]
             log.proxy = formData["proxy"]
+
             log.total_pages = pages
             log.total_ads = ads
+
+            log.category = formData["category"]
 
             log.save()
 
@@ -172,7 +179,7 @@ class FetchedAds(models.Model):
         (INVALID_STATUS, 'INVALID'),
     )
 
-    task = models.ForeignKey(Tasks,related_name='fetched_ads')
+    task = models.ForeignKey(Tasks, related_name='fetched_ads')
 
     ad_id = models.TextField(blank=True, null=True)
     link = models.TextField(blank=True, null=True)
@@ -192,3 +199,51 @@ class FetchedAds(models.Model):
 
     class Meta:
         db_table = u'app_fetched_ads'
+
+
+class AdsMessages(models.Model):
+
+    SENT_STATUS = 1
+    FAILED_STATUS = 2
+    PENDING_STATUS = 3
+
+    STATUS_CHOICES = (
+        (SENT_STATUS, 'SENT'),
+        (FAILED_STATUS, 'FAILED'),
+        (PENDING_STATUS, 'PENDING'),
+    )
+
+    ad = models.ForeignKey(FetchedAds)
+
+    message = models.TextField(blank=True, null=True)
+    name = models.TextField(blank=True, null= True)
+    email = models.TextField(blank=True, null=True)
+    phone = models.TextField(blank=True, null=True)
+    created_time = models.DateTimeField(blank=True)
+    modified_time = models.DateTimeField(blank=True)
+    status = models.IntegerField(choices=STATUS_CHOICES,default=PENDING_STATUS)
+
+    @classmethod
+    def save_item(cls, form_data, ad, status):
+        item = cls()
+
+        if type(ad) is str:
+            item.ad_id =ad
+        else:
+            item.ad = ad
+
+        item.message = form_data['message']
+        item.name = form_data['name']
+        item.email = form_data['email']
+        item.phone = form_data['phone']
+        item.created_time = datetime.now()
+        item.modified_time = datetime.now()
+        item.status = status
+
+        item.save()
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = u'ads_messages'

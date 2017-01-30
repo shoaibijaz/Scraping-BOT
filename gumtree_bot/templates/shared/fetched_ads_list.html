@@ -1,9 +1,11 @@
 <div class="col-md-12">
     <div class="card">
         <div class="header">
-            <h4 class="title">Extracted Ads   <span class="category" id="extractedCount">
+            <h4 class="title">Extracted Ads
+                <span class="category" id="extractedCount">
                 {{ items_list|length  }}
-            </span></h4>
+            </span>
+            </h4>
 
         </div>
         <div class="content">
@@ -17,7 +19,7 @@
                         </th>
                         <th>Title</th>
                         <th>Posted On</th>
-                        <th>Status</th>
+                        <th>Messages</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -25,14 +27,16 @@
 
                         {% if item.name %}
                             <tr>
-                                <td> <input type="checkbox" value="{{ item.id }}" ></td>
+                                <td> <input type="checkbox" class="chkAd" value="{{ item.id }}" ></td>
                                 <td>
                                     <a href="{{ item.link }}" target="_blank">
                                         {{ item.name }}
                                     </a>
                                 </td>
                                 <td>{{ item.posted_on }}</td>
-                                <td>{{ item.status }}</td>
+                                <td>
+                                    {{ item.adsmessages_set | length }}
+                                </td>
                             </tr>
                         {% endif %}
                     {%  endfor %}

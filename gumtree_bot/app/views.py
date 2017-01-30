@@ -2,12 +2,12 @@ from django.views.generic import TemplateView, View, ListView
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 
-from app.bot import ScrapAds
 from app.models import *
 from app.bot_post import *
 from app.forms import *
 from app.Response import JSONResponse
 from app.scrapers.scraper import Scraper
+from app.bots.gumtree_message_bot import CommentBot
 
 import json
 
@@ -55,6 +55,8 @@ class ScraperFormView(TemplateView):
             "proxy" : search_log.proxy
 
         })
+
+        context['category_id'] = search_log.category.id if search_log.category else ''
 
         return self.render_to_response(context)
 
@@ -160,7 +162,9 @@ class GetAdsListView(ListView):
         try:
             task_id = self.request.GET.get('id',0)
 
-            return FetchedAds.objects.filter(task_id=int(task_id))
+            ads = FetchedAds.objects.filter(task_id=int(task_id))
+
+            return ads
 
         except Exception as ex:
             raise ex
@@ -178,6 +182,25 @@ class CommentFormView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         context = super(CommentFormView, self).get_context_data(**kwargs)
+
+        try:
+
+            form = CommentForm(request.POST)
+
+            json_response = JSONResponse()
+
+            if form.is_valid():
+                data = form.cleaned_data
+                json_response.status = JSONResponse.SUCCESS_STATUS
+                json_response.data = CommentBot.post_comment(data)
+            else:
+                json_response = json_response.form_error_response(form)
+
+            return HttpResponse(json_response.to_json())
+
+        except Exception as ex:
+            json_response = JSONResponse().exception_response(str(ex))
+            return HttpResponse(json_response.to_json())
 
 
 class PostCommentView(View):

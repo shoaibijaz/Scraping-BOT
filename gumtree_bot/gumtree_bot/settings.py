@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'api',
+    'rest_framework'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -126,7 +128,7 @@ DATABASES = {
         },
 }
 
-DATABASES = {
+DATABASES1 = {
     'default': {
         'NAME': 'gumtree',
         'ENGINE': 'mysql.connector.django',

@@ -15,6 +15,8 @@
             commentFormURL:'',
             commentFormDIV:'',
             commentForm:'',
+            categoriesURL:'',
+            categoriesDIV:''
         };
 
         var options = $.extend(defaults, options);
@@ -26,6 +28,7 @@
                 initAjaxScraperForm();
                 validateScraperForm();
                 autoStartExtractAds();
+                $("#id_website").trigger('change');
             });
         };
 
@@ -34,6 +37,7 @@
             $(defaults.scraperForm).ajaxForm({
                 beforeSubmit:  function(){
                     createDIVLoader($(defaults.scraperFormDIV));
+                    $(defaults.commentForm).find("input,button").attr('disabled',true);
                 },
                 success: function(response){
 
@@ -42,10 +46,12 @@
                     notification("Searching ads completed.");
                     onSearchAdCompleted(parsed);
                     removeDIVLoader($(defaults.scraperFormDIV));
+                    $(defaults.commentForm).find("input,button").attr('disabled',false);
                 },
                 error:function () {
                     notification("error! failed to extract ads.");
                     removeDIVLoader($(defaults.scraperFormDIV));
+                    $(defaults.commentForm).find("input,button").attr('disabled',false);
                 }
             });
 
@@ -55,10 +61,9 @@
             $(defaults.scraperForm).validate({
                 rules: {
                     website: "required",
+                    keywords:'required'
                 },
-                messages: {
-                    website: "Please select website.",
-                }
+                errorPlacement: function(error, element) {}
             });
         };
 
@@ -149,6 +154,9 @@
                 data:{ id:defaults.logID, task: defaults.taskID },
                 beforeSend:function () {
                     setButtonsStatus(true,true, 5000);
+
+                    $(defaults.commentForm).find("input,button").attr('disabled',true);
+
                     extract_ads_interval = setInterval(function () {
                         $("#btnCancelExtractAds").attr('disabled', false);
                         getAds();
@@ -160,19 +168,27 @@
                     var parsed = $.parseJSON(response);
 
                     if(parsed.status == 200){
-                        notification('Ads extracted successfully..')
+
+                        getAds();
+
+                        notification('Ads extracted successfully..');
                     }
                     else{
+
                         notification('Ads extraction process failed..');
                     }
 
                     clearInterval(extract_ads_interval);
+
                     extract_ads_interval = undefined;
 
                     setButtonsStatus(false,true, 100);
+
+                    $(defaults.commentForm).find("input,button").attr('disabled',false);
                 },
                 error: function(){
                     setButtonsStatus(false,true, 100);
+                    $(defaults.commentForm).find("input,button").attr('disabled',false);
                 }
             });
 
@@ -243,6 +259,54 @@
 
         };
 
+        var getCheckedAds = function(){
+
+            var ads_list = [];
+
+            var ads =  $("#adsListDiv").find(".chkAd");
+
+            $(ads).each(function(){
+                var checked = $(this).is(':checked');
+                if(checked)
+                    ads_list.push($(this).val());
+            });
+
+            return ads_list;
+        };
+
+        var getCategories = function(id){
+            $.get(defaults.categoriesURL,{website:id},function(response){
+                if(response && response.length > 0){
+                    createCategoriesDropdown(response);
+                }
+            });
+        };
+
+        var createCategoriesDropdown = function(data) {
+
+            var dv = $("<div />", {class:'form-group'});
+            dv.html($("<label />", { text: 'Categories'}));
+
+            var select = $("<select />", { class:'form-control', name:'category' });
+
+            select.append($("<option />", { value:'', text:'Select Category' }));
+
+            $(data).each(function(index,item){
+
+                var option = $("<option />", { value:item.id, text:item.name });
+
+                select.append(option);
+            });
+
+            dv.append(select);
+
+            $(defaults.categoriesDIV).html($("<div />", {class:'col-md-12'}).html(dv));
+
+            if(!$("#id_keywords").val()) $("#id_keywords").val('  ');
+
+           select.val($("#hf_category").val());
+        };
+
         /* Comment Form */
 
         var getCommentForm = function () {
@@ -254,7 +318,8 @@
                 beforeSend:function () {
                 },
                 success: function(response){
-                   $(defaults.commentFormDIV).html(response);
+                    $(defaults.commentFormDIV).html(response);
+                    initAjaxCommentForm();
                     validateCommentForm();
                 },
                 error: function(){
@@ -264,20 +329,53 @@
 
         var validateCommentForm = function () {
             $(defaults.commentForm).validate({
+                rules: {
+                    message: "required",
+                    name: "required",
+                    email: "required",
+                    phone: "required"
+                },
                 errorPlacement: function(error, element) {}
             });
         };
 
+        var initAjaxCommentForm = function () {
+
+            $(defaults.commentForm).ajaxForm({
+                beforeSubmit:  function(){
+                    $(defaults.commentForm).find("input,button").attr('disabled',true);
+                    $(defaults.scraperForm).find("input,button").attr('disabled',true);
+                },
+                success: function(response){
+                    $(defaults.commentForm).find("input,button").attr('disabled',false);
+                    $(defaults.scraperForm).find("input,button").attr('disabled',false);
+
+                },
+                error:function () {
+                    notification("error! failed to post comments.", 'danger');
+                    $(defaults.commentForm).find("input,button").attr('disabled',false);
+                    $(defaults.scraperForm).find("input,button").attr('disabled',false);
+                }
+            });
+
+        };
+
         /* End Comment Form */
 
-        function notification(message){
+        function notification(message, type){
+
             $.notify({
-                icon: 'pe-7s-gift',
+                icon: 'pe-7s-bell',
                 message: message
 
             },{
-                type: 'info',
-                timer: 4000
+                type: type?type:'info',
+                timer: 4000,
+                placement: {
+                    from: 'bottom',
+                    align: 'left'
+                }
+
             });
 
         }
@@ -298,12 +396,15 @@
                 if($(defaults.scraperForm).valid()){
                     $(defaults.scraperForm).submit();
                 }
+                else{
+                    notification('Please fill fields.', 'danger');
+                }
             });
 
             $("div").on('click','#btnCreateNewSearch',function(e){
                 e.stopPropagation();
 
-                conf  = confirm("Are you sure? You want to reload the page?");
+                var conf  = confirm("Are you sure? You want to reload the page?");
 
                 if(conf){
                     window.location = defaults.scraperPageURL
@@ -332,9 +433,53 @@
 
             $("div").on('click','#btnPostMessage',function(e){
                 e.stopPropagation();
-                validateCommentForm();
-                alert($(defaults.commentForm).valid())
+
+                var ads = getCheckedAds();
+
+                $(defaults.commentForm).find("#id_ads").val(ads.join())
+
+                if($(defaults.commentForm).valid()){
+
+
+                    if(ads.length > 0){
+                        $("#id_ads").val(ads.join());
+                        $(defaults.commentForm).submit();
+                    }
+                    else{
+                        notification('Please select ads', 'danger');
+                    }
+                }
             });
+
+            $("div").on('click','#btnMessageProfile',function(e){
+                e.stopPropagation();
+
+                $(defaults.commentForm).find("#id_message").val('How much it is?');
+                $(defaults.commentForm).find("#id_name").val('DEV');
+                $(defaults.commentForm).find("#id_phone").val('91180187');
+                $(defaults.commentForm).find("#id_email").val('dev.gumtree001@gmail.com');
+
+            });
+
+            $("div").on('change','#chkAll',function(e){
+                e.stopPropagation();
+                var checked = $(this).is(':checked');
+                $("#adsListDiv").find(".chkAd").prop('checked',checked);
+            });
+
+            $("div").on('change','#id_website',function(e){
+                e.stopPropagation();
+
+                var val = $(this).val();
+
+                $(defaults.categoriesDIV).empty();
+
+                $("#id_keywords").val($("#id_keywords").val().trim());
+
+                if(val){ getCategories(val); }
+
+            });
+
 
         };
 
@@ -342,7 +487,10 @@
 
             if(!defaults.taskID || defaults.taskID <=0) defaults.taskID =0;
 
-            if(!defaults.logID) defaults.logID = 0;
+            if(!defaults.logID) {
+                defaults.logID = 0;
+            }
+
 
             getScraperForm();
 
