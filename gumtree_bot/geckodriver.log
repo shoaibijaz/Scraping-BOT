@@ -57,3 +57,98 @@ JavaScript error: https://sdk.accountkit.com/en_US/sdk.js?hash=1fe0b472e873d09a4
 JavaScript error: https://sdk.accountkit.com/en_US/sdk.js?hash=1fe0b472e873d09a4f280cc848df1d9f, line 70: Error: Invalid App Id: Must be a number or numeric string representing the application id. For more details, see https://developers.facebook.com/docs/accountkit/integratingweb#configureloginhtml
 [Child 2264] WARNING: pipe error: 109: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
 [Child 2264] WARNING: pipe error: 109: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1486232601355	geckodriver	INFO	Listening on 127.0.0.1:49454
+1486232603365	mozprofile::profile	INFO	Using profile path C:\Users\Shoaib\AppData\Local\Temp\rust_mozprofile.po5sb8Md5d1n
+1486232603368	geckodriver::marionette	INFO	Starting browser C:\Program Files\Mozilla Firefox\firefox.exe
+1486232603743	geckodriver::marionette	INFO	Connecting to Marionette on localhost:49463
+1486232615238	Marionette	INFO	Listening on port 49463
+JavaScript error: http://pixel.adsafeprotected.com/jload?anId=10980&campId=728x90&pubId=34186120&chanId=30187600&placementId=75285880&pubCreative=57410090200&pubOrder=197483560&cb=1786880211&custom=sticky&custom2=MACRO&custom3=MACRO, line 252: NS_ERROR_NOT_INITIALIZED: 
+[Child 6724] WARNING: pipe error: 109: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1486233004674	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+1486233004682	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+1486233149473	geckodriver	INFO	Listening on 127.0.0.1:49954
+1486233163561	mozprofile::profile	INFO	Using profile path C:\Users\Shoaib\AppData\Local\Temp\rust_mozprofile.5R7CYZ9Lr2CG
+1486233163564	geckodriver::marionette	INFO	Starting browser C:\Program Files\Mozilla Firefox\firefox.exe
+1486233163580	geckodriver::marionette	INFO	Connecting to Marionette on localhost:49977
+1486233200271	Marionette	INFO	Listening on port 49977
+JavaScript error: http://www.gumtree.com.au//s-ad/capital-hill/other-real-estate/house-sitter-available/1138118347, line 25: SyntaxError: expected expression, got ','
+1486233329451	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+1486233368639	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+1486233392760	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+JavaScript error: chrome://marionette/content/listener.js, line 1001: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIWebProgress.removeProgressListener]
+[Child 13384] ###!!! ABORT: Aborting on channel error.: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2056
+thread '<unnamed>' panicked at 'called `Result::unwrap()` on an `Err` value: Error { repr: Os { code: 10054, message: "An existing connection was forcibly closed by the remote host." } }', ../src/libcore\result.rs:799
+note: Run with `RUST_BACKTRACE=1` for a backtrace.
+1486233504984	geckodriver	INFO	Listening on 127.0.0.1:50213
+1486233507075	mozprofile::profile	INFO	Using profile path C:\Users\Shoaib\AppData\Local\Temp\rust_mozprofile.7cbyzfO0ODkY
+1486233507083	geckodriver::marionette	INFO	Starting browser C:\Program Files\Mozilla Firefox\firefox.exe
+1486233507123	geckodriver::marionette	INFO	Connecting to Marionette on localhost:50223
+1486233514327	Marionette	INFO	Listening on port 50223
+JavaScript error: https://www.gumtree.com.au//s-ad/capital-hill/other-real-estate/house-sitter-available/1138118347, line 25: SyntaxError: expected expression, got ','
+JavaScript warning: https://cdn.adsafeprotected.com/sca.17.1.10.js, line 1: SyntaxError: for-in loop head declarations may not have initializers
+[Child 10008] ###!!! ABORT: Aborting on channel error.: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2056
+thread '<unnamed>' panicked at 'called `Result::unwrap()` on an `Err` value: Error { repr: Os { code: 10054, message: "An existing connection was forcibly closed by the remote host." } }', ../src/libcore\result.rs:799
+note: Run with `RUST_BACKTRACE=1` for a backtrace.
+1486234808412	geckodriver	INFO	Listening on 127.0.0.1:50693
+1486234810355	mozprofile::profile	INFO	Using profile path C:\Users\Shoaib\AppData\Local\Temp\rust_mozprofile.mkt4u5A1rlT3
+1486234810363	geckodriver::marionette	INFO	Starting browser C:\Program Files\Mozilla Firefox\firefox.exe
+1486234810394	geckodriver::marionette	INFO	Connecting to Marionette on localhost:50701
+1486234818892	Marionette	INFO	Listening on port 50701
+JavaScript error: https://www.gumtree.com.au//s-ad/capital-hill/other-real-estate/house-sitter-available/1138118347, line 25: SyntaxError: expected expression, got ','
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 75: TypeError: this._recipeManager is null
+TabSources.prototype._fetchSourceMap threw an exception: SyntaxError: JSON.parse: unexpected character at line 1 column 1 of the JSON data
+Stack: SourceMapConsumer@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/sourcemap/source-map.js:1281:20
+TabSources.prototype._fetchSourceMap/fetching<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/server/actors/utils/TabSources.js:469:19
+Handler.prototype.process@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:937:23
+this.PromiseWalker.walkerLoop@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:816:7
+this.PromiseWalker.scheduleWalkerLoop/<@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:750:11
+Line: 1281, column: 20
+console.error: 
+  TabSources.prototype._fetchSourceMap threw an exception: SyntaxError: JSON.parse: unexpected character at line 1 column 1 of the JSON data
+Stack: SourceMapConsumer@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/sourcemap/source-map.js:1281:20
+TabSources.prototype._fetchSourceMap/fetching<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/server/actors/utils/TabSources.js:469:19
+Handler.prototype.process@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:937:23
+this.PromiseWalker.walkerLoop@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:816:7
+this.PromiseWalker.scheduleWalkerLoop/<@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:750:11
+Line: 1281, column: 20
+JavaScript error: https://ssl-gumtree.classistatic.com/master-a958d436f8d902b3d4bd5251cc734d8e5b5781ac/_/commonoptimised.js, line 2: TypeError: a is undefined
+Handler function NetworkEventActorProxy.addSecurityInfo threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1651"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1651:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._getSecurityInfo<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:488:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype.onStartRequest@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:429:5
+Line: 1651, column: 0
+console.error: 
+  Handler function NetworkEventActorProxy.addSecurityInfo threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1651"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1651:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._getSecurityInfo<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:488:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype.onStartRequest@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:429:5
+Line: 1651, column: 0
+[Child 9800] ###!!! ABORT: Aborting on channel error.: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2056
+1486236211383	geckodriver	INFO	Listening on 127.0.0.1:60429
+1486236213322	mozprofile::profile	INFO	Using profile path C:\Users\Shoaib\AppData\Local\Temp\rust_mozprofile.v6aCsmc3XEc2
+1486236213330	geckodriver::marionette	INFO	Starting browser C:\Program Files\Mozilla Firefox\firefox.exe
+1486236213412	geckodriver::marionette	INFO	Connecting to Marionette on localhost:60436
+1486236221262	Marionette	INFO	Listening on port 60436
+1486236302530	addons.productaddons	WARN	Failed downloading XML, status: 0, reason: error
+JavaScript error: https://ssl-gumtree.classistatic.com/RC-6a78748b80d873d77d83a285d8116a501a039c6b/_/commonoptimised.js, line 4: ReferenceError: Modernizr is not defined
+JavaScript error: https://ssl-gumtree.classistatic.com/RC-6a78748b80d873d77d83a285d8116a501a039c6b/_/vip.js, line 1: TypeError: c.screen is undefined
+JavaScript error: https://ssl-gumtree.classistatic.com/RC-6a78748b80d873d77d83a285d8116a501a039c6b/_/adsensecommon.js, line 1: TypeError: i.screen is undefined
+[Child 13884] ###!!! ABORT: Aborting on channel error.: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2056
+1486236620973	geckodriver	INFO	Listening on 127.0.0.1:60821
+1486236622981	mozprofile::profile	INFO	Using profile path C:\Users\Shoaib\AppData\Local\Temp\rust_mozprofile.lx1m0BjyDXh9
+1486236622987	geckodriver::marionette	INFO	Starting browser C:\Program Files\Mozilla Firefox\firefox.exe
+1486236623018	geckodriver::marionette	INFO	Connecting to Marionette on localhost:60828
+1486236634600	Marionette	INFO	Listening on port 60828
+JavaScript error: http://www.gumtree.com.au//s-ad/capital-hill/other-real-estate/house-sitter-available/1138118347, line 25: SyntaxError: expected expression, got ','
+[Child 13624] ###!!! ABORT: Aborting on channel error.: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2056
+1486239534908	geckodriver	INFO	Listening on 127.0.0.1:57719
+1486239536868	mozprofile::profile	INFO	Using profile path C:\Users\Shoaib\AppData\Local\Temp\rust_mozprofile.q68T2tBiTMm4
+1486239536874	geckodriver::marionette	INFO	Starting browser C:\Program Files\Mozilla Firefox\firefox.exe
+1486239536938	geckodriver::marionette	INFO	Connecting to Marionette on localhost:57730
+1486239547593	Marionette	INFO	Listening on port 57730
+JavaScript error: http://www.gumtree.com.au//s-ad/capital-hill/other-real-estate/house-sitter-available/1138118347, line 25: SyntaxError: expected expression, got ','
+[Child 7816] ###!!! ABORT: Aborting on channel error.: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2056

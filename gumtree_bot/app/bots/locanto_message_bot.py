@@ -4,6 +4,7 @@ import time
 
 from app.models import *
 
+
 class CommentBot:
 
     @classmethod
@@ -41,9 +42,10 @@ class CommentBot:
             headers['Content-Type'] = 'application/json; charset=UTF-8'
 
             data = {
-                'msgID':ad.ad_id,
+                'msgID':'1105651255',
                 'action':'new_conversation',
-                'email_message':form_data['message']
+                'email_message':'Price',
+                'email':'endrew@yahoo.com'
             }
 
             data = json.dumps(data)

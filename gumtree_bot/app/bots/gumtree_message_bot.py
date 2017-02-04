@@ -1,3 +1,10 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
+
 import requests
 import json
 import time
@@ -22,6 +29,9 @@ class CommentBot:
                 if website and website.function == 'gumtree_1':
                     if cls.post_to_sin(form_data,ad,website):
                         count += 1
+                elif website and website.function == 'gumtree_3':
+                        if cls.post_to_aus(form_data,ad,website):
+                            count += 1
 
                 time.sleep(5)
 
@@ -116,3 +126,54 @@ class CommentBot:
 
         except Exception as ex:
             return False
+
+
+    @classmethod
+    def post_to_aus(cls, form_data, ad, website):
+
+        driver = None
+
+        try:
+
+            url = ad.link
+            driver = webdriver.Firefox()
+
+            try:
+                driver.get(url)
+
+                element_present = EC.presence_of_element_located((By.ID, 'reply-form-send-message'))
+                WebDriverWait(driver, 5).until(element_present)
+
+            except TimeoutException:
+                print ("Timed out waiting for page to load")
+
+            if len(driver.find_elements_by_id('reply-form-send-message')) > 0:
+                driver.find_element(By.ID,'reply-form-send-message').click()
+
+                if len(driver.find_elements_by_id('viewad-contact-submit')) > 0:
+
+                    driver.find_element(By.ID, 'message').send_keys(form_data['message'])
+                    driver.find_element(By.ID, 'viewad-contact-name').send_keys(form_data['name'])
+                    driver.find_element(By.ID,'from').send_keys(form_data['email'])
+
+                    if len(driver.find_elements_by_id('reply-form-copy')) > 0:
+                        driver.find_element(By.ID,'reply-form-copy').click()
+
+                    #driver.find_element(By.ID,'viewad-contact-submit').click()
+
+
+            cls.quit_selenium(driver)
+
+        except Exception as ex:
+            print(ex)
+            cls.quit_selenium(driver)
+            return False
+
+    @classmethod
+    def quit_selenium(cls,driver):
+        try:
+            driver.quit()
+            driver.close()
+        except Exception as ex:
+            print('Quit Selenium')
+            pass
