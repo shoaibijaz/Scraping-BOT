@@ -70,10 +70,11 @@ class ScraperFormView(TemplateView):
             form = SearchForm(request.POST)
 
             json_response = JSONResponse()
-            return HttpResponse(1)
+
 
             if form.is_valid():
                 data = form.cleaned_data
+                return HttpResponse(1)
                 #json_response.status = JSONResponse.SUCCESS_STATUS
                 json_response.data = Scraper.validate_data(data)
             else:
