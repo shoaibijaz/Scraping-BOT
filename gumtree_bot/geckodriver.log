@@ -728,3 +728,28 @@ JavaScript error: resource://gre/modules/PerformanceWatcher-content.js, line 49:
 
 JavaScript error: chrome://marionette/content/listener.js, line 870: TypeError: can't access dead object
 1486570065903	geckodriver	INFO	Listening on 127.0.0.1:59806
+1486571382556	geckodriver	INFO	Listening on 127.0.0.1:57278
+1486571384489	mozprofile::profile	INFO	Using profile path C:\Users\Shoaib\AppData\Local\Temp\rust_mozprofile.joUj3wzNs8eo
+1486571384494	geckodriver::marionette	INFO	Starting browser C:\Program Files\Mozilla Firefox\firefox.exe
+1486571384823	geckodriver::marionette	INFO	Connecting to Marionette on localhost:57285
+1486571389469	Marionette	INFO	Listening on port 57285
+1486571396942	Marionette	WARN	Using deprecated data structure for setting timeouts
+JavaScript error: http://www.gumtree.com.au//s-ad/west-end/other/experienced-labourer-searching-for-work/1138533623, line 25: SyntaxError: expected expression, got ','
+[Child 11204] WARNING: pipe error: 232: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 513
+[Child 11204] ###!!! ABORT: Aborting on channel error.: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2056
+1486571726616	geckodriver	INFO	Listening on 127.0.0.1:52865
+1486571728584	mozprofile::profile	INFO	Using profile path C:\Users\Shoaib\AppData\Local\Temp\rust_mozprofile.eB877g0dkRbT
+1486571728587	geckodriver::marionette	INFO	Starting browser C:\Program Files\Mozilla Firefox\firefox.exe
+1486571728601	geckodriver::marionette	INFO	Connecting to Marionette on localhost:52872
+1486571730773	Marionette	INFO	Listening on port 52872
+1486571735223	Marionette	WARN	Using deprecated data structure for setting timeouts
+[Child 11532] ###!!! ABORT: Aborting on channel error.: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2056
+1486571803518	geckodriver	INFO	Listening on 127.0.0.1:65259
+1486571805505	mozprofile::profile	INFO	Using profile path C:\Users\Shoaib\AppData\Local\Temp\rust_mozprofile.NYhi374LJhiC
+1486571805510	geckodriver::marionette	INFO	Starting browser C:\Program Files\Mozilla Firefox\firefox.exe
+1486571805524	geckodriver::marionette	INFO	Connecting to Marionette on localhost:65268
+1486571808831	Marionette	INFO	Listening on port 65268
+1486571813970	Marionette	WARN	Using deprecated data structure for setting timeouts
+JavaScript warning: http://cdn.adsafeprotected.com/sca.17.1.10.js, line 1: SyntaxError: for-in loop head declarations may not have initializers
+JavaScript warning: http://cdn.adsafeprotected.com/sca.17.1.10.js, line 1: SyntaxError: for-in loop head declarations may not have initializers
+[Child 5296] ###!!! ABORT: Aborting on channel error.: file c:/builds/moz2_slave/m-rel-w32-00000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2056

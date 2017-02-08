@@ -35,7 +35,7 @@
                                 </td>
                                 <td>{{ item.posted_on }}</td>
                                 <td>
-                                    {{ item.adsmessages_set | length }}
+                                    {{ item.adsmessages_set.all | length }}
                                 </td>
                             </tr>
                         {% endif %}

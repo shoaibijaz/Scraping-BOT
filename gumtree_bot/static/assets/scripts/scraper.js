@@ -355,7 +355,7 @@
 
                         getAds();
 
-                    }, 5000);
+                    }, 10000);
 
                 },
                 success: function(response){
@@ -511,6 +511,13 @@
                 $(defaults.commentForm).find("#id_name").val('DEV');
                 $(defaults.commentForm).find("#id_phone").val('91180187');
                 $(defaults.commentForm).find("#id_email").val('dev.gumtree001@gmail.com');
+
+            });
+
+             $("div").on('click','#btnCancelPostComment',function(e){
+                e.stopPropagation();
+
+                stopPostingComments();
 
             });
 
