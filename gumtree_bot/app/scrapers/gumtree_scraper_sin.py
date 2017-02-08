@@ -36,11 +36,12 @@ class GumtreeScraperSingapore:
             website = form_data['website']
             url = website.search_url.format(page=1, search=form_data['keywords'])
             url = url.encode('utf-8')
-            return url
+
             r = requests.get(url)
 
             if r.status_code == 200:
                 content = r.text
+                return content
 
                 if 'Sorry, but we didn’t find any results. Below you can find some tips to help you in your search.' not in content:
                     soup = BeautifulSoup(content, "html.parser")
