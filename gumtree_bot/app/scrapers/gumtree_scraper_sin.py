@@ -40,11 +40,10 @@ class GumtreeScraperSingapore:
             r = requests.get(url)
 
             if r.status_code == 200:
-                content = r.text.encode('utf-8')
 
                 not_found_text = 'Sorry, but we didn’t find any results. Below you can find some tips to help you in your search.'
-                
-                if not_found_text not in content:
+
+                if not_found_text not in str(r.text):
 
                     soup = BeautifulSoup(r.text, "html.parser")
 

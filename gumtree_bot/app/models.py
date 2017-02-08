@@ -149,8 +149,8 @@ class Tasks(models.Model):
         item = cls()
 
         if type(search_item) is int or type(search_item) is str:
-            item.search_id = search_item
-        else:
+            item.search_id = int(search_item)
+        elif type(search_item) is SearchLog:
             item.search = search_item
 
         item.start_time = datetime.now()
