@@ -42,10 +42,13 @@ class GumtreeScraperSingapore:
             if r.status_code == 200:
                 content = r.text
 
-                if 'Sorry, but we didn’t find any results. Below you can find some tips to help you in your search.' not in content:
-                    soup = BeautifulSoup(content, "html.parser")
+                not_found_text = 'Sorry, but we didn’t find any results. Below you can find some tips to help you in your search.'
+                not_found_text.encode('utf-8')
 
-                    return soup
+                if not_found_text not in content:
+                    return not_found_text
+
+                    soup = BeautifulSoup(content, "html.parser")
 
                     total = soup.find('span', { "class":'count' }).text.replace('ads','').replace(',','').strip()
 
