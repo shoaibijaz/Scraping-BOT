@@ -52,3 +52,10 @@ class Scraper:
             print(ex)
             raise ex
 
+    @classmethod
+    def ex_data(cls, url):
+        import requests
+
+        r = requests.get(url)
+        return r.text
+

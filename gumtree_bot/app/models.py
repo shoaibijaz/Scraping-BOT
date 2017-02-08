@@ -96,7 +96,6 @@ class SearchLog(models.Model):
         except Exception as ex:
             raise ex
 
-
     def __str__(self):
         return self.keywords
 

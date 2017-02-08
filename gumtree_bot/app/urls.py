@@ -14,4 +14,5 @@ urlpatterns = patterns('',
     url(r'^get_ads_list/$', GetAdsListView.as_view(), name='ads-list'),
     url(r'^comment_form/$', CommentFormView.as_view(), name='comment-form'),
     url(r'^post_comment/$', PostCommentView.as_view(), name='post_comment'),
+url(r'^test/$', TestView.as_view(), name='text-it'),
 )

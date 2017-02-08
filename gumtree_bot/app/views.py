@@ -213,3 +213,14 @@ class PostCommentView(View):
         message = request.GET.get('message', '')
 
         return HttpResponse(WebDriver().post_comments(ads,message))
+
+
+class TestView(View):
+
+    content = ''
+
+    def get(self, request, *args, **kwargs):
+        url = request.GET.get('url', '')
+        content = Scraper.ex_data(url)
+
+        return HttpResponse(content)
