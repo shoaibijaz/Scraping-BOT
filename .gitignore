@@ -2,3 +2,5 @@ python-scraper/.idea/
 *.iml
 gumtree_bot/api/__pycache__/serializers.cpython-34.pyc
 *.pyc
+*.sqlite3
+gumtree_bot/db.sqlite3
