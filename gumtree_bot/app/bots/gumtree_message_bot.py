@@ -11,6 +11,7 @@ import time
 
 from app.models import *
 
+
 class CommentBot:
 
     @classmethod
@@ -18,12 +19,21 @@ class CommentBot:
 
         try:
 
+            task = Tasks.objects.get(pk=int(form_data['task']))
+
+            task.update_status(Tasks.RUNNING_STATUS)
+
             ads_list = str(form_data['ads']).split(',')
 
             count = 0
 
             for ad_id in ads_list:
+
+                if not cls.check_task_status(task):
+                    return count
+
                 ad = FetchedAds.objects.get(pk=int(ad_id))
+
                 website = ad.task.search.website
 
                 if website and website.function == 'gumtree_1':
@@ -34,6 +44,8 @@ class CommentBot:
                             count += 1
 
                 time.sleep(5)
+
+            task.update_status(Tasks.COMPLETE_STATUS)
 
             return count
 
@@ -127,7 +139,6 @@ class CommentBot:
         except Exception as ex:
             return False
 
-
     @classmethod
     def post_to_aus(cls, form_data, ad, website):
 
@@ -163,8 +174,6 @@ class CommentBot:
                     if len(driver.find_elements_by_id('reply-form-copy')) > 0:
                         driver.find_element(By.ID,'reply-form-copy').click()
 
-
-
                     driver.find_element(By.ID,'viewad-contact-submit').click()
                     sent = True
                     sent_status = AdsMessages.SENT_STATUS
@@ -172,7 +181,6 @@ class CommentBot:
                     time.sleep(1)
 
             AdsMessages.save_item(form_data,ad,sent_status)
-
 
             cls.quit_selenium(driver)
 
@@ -184,6 +192,23 @@ class CommentBot:
             print(ex)
             cls.quit_selenium(driver)
             return False
+
+    @classmethod
+    def check_task_status(cls, task_item):
+        try:
+
+            task_item.refresh_from_db()
+
+            print('Task({}) refreshed database and status {}.'.format(task_item.id, task_item.status))
+
+            if task_item.status == Tasks.STOPPED_STATUS:
+                print('Task({}) stopped .'.format(task_item.id))
+                return False
+
+            return True
+
+        except Exception as ex:
+            raise ex
 
     @classmethod
     def quit_selenium(cls,driver):

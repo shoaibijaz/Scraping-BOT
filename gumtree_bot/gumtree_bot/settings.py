@@ -119,6 +119,13 @@ STATICFILES_DIRS = (
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR,'db.sqlite3')
+    }
+}
+
+DATABASES_POST = {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'gumtree',
         'USER': 'postgres',
@@ -128,7 +135,7 @@ DATABASES = {
         },
 }
 
-DATABASES1 = {
+DATABASES_MYSQL = {
     'default': {
         'NAME': 'gumtree',
         'ENGINE': 'mysql.connector.django',

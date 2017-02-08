@@ -24,10 +24,12 @@
         var getScraperForm = function () {
             $.get(defaults.getScraperFormURL,{ id:defaults.logID },function (response) {
                 $(defaults.scraperFormDIV).html(response);
+
                 addBootstrapClass();
                 initAjaxScraperForm();
                 validateScraperForm();
                 autoStartExtractAds();
+
                 $("#id_website").trigger('change');
             });
         };
@@ -228,13 +230,14 @@
                 success: function(response){
                     var parsed = $.parseJSON(response);
 
-
                     var interval = setInterval(function () {
+
                         if(!extract_ads_interval){
                             notification('Operation stopped..');
                             setButtonsStatus(false,true, 100);
                             clearInterval(interval);
                         }
+
                     }, 100);
 
                 },
@@ -304,7 +307,7 @@
 
             if(!$("#id_keywords").val()) $("#id_keywords").val('  ');
 
-           select.val($("#hf_category").val());
+            select.val($("#hf_category").val());
         };
 
         /* Comment Form */
@@ -319,6 +322,7 @@
                 },
                 success: function(response){
                     $(defaults.commentFormDIV).html(response);
+                    $(defaults.commentForm).find("#id_task").val(defaults.taskID);
                     initAjaxCommentForm();
                     validateCommentForm();
                 },
@@ -345,14 +349,61 @@
                 beforeSubmit:  function(){
                     $(defaults.commentForm).find("input,button").attr('disabled',true);
                     $(defaults.scraperForm).find("input,button").attr('disabled',true);
+
+                    extract_ads_interval = setInterval(function () {
+                        $("#btnCancelPostComment").attr('disabled', false);
+
+                        getAds();
+
+                    }, 5000);
+
                 },
                 success: function(response){
                     $(defaults.commentForm).find("input,button").attr('disabled',false);
                     $(defaults.scraperForm).find("input,button").attr('disabled',false);
 
+                    clearInterval(extract_ads_interval);
+                    extract_ads_interval = undefined;
                 },
                 error:function () {
                     notification("error! failed to post comments.", 'danger');
+                    $(defaults.commentForm).find("input,button").attr('disabled',false);
+                    $(defaults.scraperForm).find("input,button").attr('disabled',false);
+
+                    if (extract_ads_interval)
+                        clearInterval(extract_ads_interval);
+                }
+            });
+
+        };
+
+        var stopPostingComments = function (){
+
+            $.ajax({
+                type: "GET",
+                url: '/stop_extract_ads',
+                data:{ id:defaults.logID, task:defaults.taskID },
+                beforeSend:function () {
+                },
+                success: function(response){
+
+                    var parsed = $.parseJSON(response);
+
+                    var interval = setInterval(function () {
+
+                        if(!extract_ads_interval){
+                            notification('Operation stopped..');
+
+                            $(defaults.commentForm).find("input,button").attr('disabled',false);
+                            $(defaults.scraperForm).find("input,button").attr('disabled',false);
+
+                            clearInterval(interval);
+                        }
+
+                    }, 100);
+
+                },
+                error: function(){
                     $(defaults.commentForm).find("input,button").attr('disabled',false);
                     $(defaults.scraperForm).find("input,button").attr('disabled',false);
                 }
@@ -433,6 +484,8 @@
 
             $("div").on('click','#btnPostMessage',function(e){
                 e.stopPropagation();
+
+                $(defaults.commentForm).find("#id_task").val(defaults.taskID);
 
                 var ads = getCheckedAds();
 

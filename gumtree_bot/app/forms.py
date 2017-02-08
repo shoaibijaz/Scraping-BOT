@@ -31,7 +31,6 @@ class SearchForm(forms.Form):
     )
 
 
-
 class CommentForm(forms.Form):
     textarea_attr = {'placeholder': 'Message','class':'form-control', 'rows':3}
     message = forms.CharField(max_length=100, required=True, initial='', widget=forms.Textarea(attrs=textarea_attr))
@@ -39,3 +38,4 @@ class CommentForm(forms.Form):
     email = forms.CharField(max_length=100,required=True,initial='', widget=forms.TextInput(attrs={'placeholder': 'Email'}))
     phone = forms.CharField(max_length=200,required=True,initial='', widget=forms.TextInput(attrs={'placeholder': 'Phone'}))
     ads = forms.CharField(required=False, initial='', widget=forms.HiddenInput)
+    task = forms.CharField(required=False, initial='', widget=forms.HiddenInput)
