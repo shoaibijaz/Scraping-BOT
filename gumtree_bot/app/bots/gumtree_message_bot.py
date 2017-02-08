@@ -132,6 +132,7 @@ class CommentBot:
     def post_to_aus(cls, form_data, ad, website):
 
         driver = None
+        sent_status, sent = AdsMessages.FAILED_STATUS, False
 
         try:
 
@@ -139,6 +140,7 @@ class CommentBot:
             driver = webdriver.Firefox()
 
             try:
+                driver.set_page_load_timeout(5000)
                 driver.get(url)
 
                 element_present = EC.presence_of_element_located((By.ID, 'reply-form-send-message'))
@@ -150,6 +152,8 @@ class CommentBot:
             if len(driver.find_elements_by_id('reply-form-send-message')) > 0:
                 driver.find_element(By.ID,'reply-form-send-message').click()
 
+                time.sleep(3)
+
                 if len(driver.find_elements_by_id('viewad-contact-submit')) > 0:
 
                     driver.find_element(By.ID, 'message').send_keys(form_data['message'])
@@ -159,10 +163,22 @@ class CommentBot:
                     if len(driver.find_elements_by_id('reply-form-copy')) > 0:
                         driver.find_element(By.ID,'reply-form-copy').click()
 
-                    #driver.find_element(By.ID,'viewad-contact-submit').click()
+
+
+                    driver.find_element(By.ID,'viewad-contact-submit').click()
+                    sent = True
+                    sent_status = AdsMessages.SENT_STATUS
+
+                    time.sleep(1)
+
+            AdsMessages.save_item(form_data,ad,sent_status)
 
 
             cls.quit_selenium(driver)
+
+            time.sleep(2)
+
+            return sent
 
         except Exception as ex:
             print(ex)
