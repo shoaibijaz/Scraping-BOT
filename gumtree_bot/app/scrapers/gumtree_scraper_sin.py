@@ -36,6 +36,7 @@ class GumtreeScraperSingapore:
             website = form_data['website']
             url = website.search_url.format(page=1, search=form_data['keywords'])
             url = url.encode('utf-8')
+            return url
             r = requests.get(url)
 
             if r.status_code == 200:
