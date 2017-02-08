@@ -55,6 +55,10 @@ class Scraper:
     @classmethod
     def ex_data(cls, url):
         import requests
+        from app.models import Websites
+
+        website = Websites.objects.get(pk=1)
+        url = website.search_url.format(page=1, search=url)
 
         r = requests.get(url)
         return r.text
