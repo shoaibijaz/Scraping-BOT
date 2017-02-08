@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+
 from _ast import ExceptHandler
 from app.scrapers.gumtree_scraper_sin import GumtreeScraperSingapore
 from app.scrapers.gumtree_scraper_uk import GumtreeScraperUK
