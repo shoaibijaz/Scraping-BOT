@@ -43,7 +43,7 @@ class GumtreeScraperSingapore:
 
                 not_found_text = 'Sorry, but we didn’t find any results. Below you can find some tips to help you in your search.'
 
-                if not_found_text not in str(r.text):
+                if not_found_text.encode('utf-8') not in (r.text).encode('utf-8'):
 
                     soup = BeautifulSoup(r.text, "html.parser")
 
