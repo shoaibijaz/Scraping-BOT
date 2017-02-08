@@ -42,7 +42,7 @@ class GumtreeScraperSingapore:
                 content = r.text
 
                 if 'Sorry, but we didn’t find any results. Below you can find some tips to help you in your search.' not in content:
-                    soup =BeautifulSoup(content, "html.parser")
+                    soup = BeautifulSoup(content, "html.parser")
 
                     total = soup.find('span', { "class":'count' }).text.replace('ads','').replace(',','').strip()
 

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.views.generic import TemplateView, View, ListView
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
