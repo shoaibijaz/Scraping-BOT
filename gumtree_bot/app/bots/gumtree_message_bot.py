@@ -65,7 +65,7 @@ class CommentBot:
             return count
 
         except Exception as ex:
-            log.debug('Error:' + str(ex))
+            log.debug('Error: at post_comment ' + str(ex))
             raise ex
 
     @classmethod
@@ -75,10 +75,10 @@ class CommentBot:
 
             headers = {}
 
-            headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'
-            headers['Content-Type'] = 'application/json; charset=UTF-8'
+            headers['User-Agent'] = u'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'
+            headers['Content-Type'] = u'application/json; charset=UTF-8'
 
-            message = "I'm interested.  Please contact me.↵When and where can I see it?↵↵";
+            message = u"I'm interested.  Please contact me.↵When and where can I see it?↵↵";
 
             phone = form_data['phone']
 
@@ -111,7 +111,7 @@ class CommentBot:
             return False
 
         except Exception as ex:
-            log.debug('Error:' + str(ex))
+            log.debug('Error: at post_to_sin ' + str(ex))
             return False
 
     @classmethod
