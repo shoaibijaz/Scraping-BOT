@@ -328,7 +328,7 @@
                     $(defaults.commentForm).find("#id_task").val(defaults.taskID);
                     initAjaxCommentForm();
                     validateCommentForm();
-                    (defaults.commentForm).find("input, textarea").addClass('form-control');
+                    $(defaults.commentForm).find("input, textarea").addClass('form-control');
                 },
                 error: function(){
                 }
