@@ -144,7 +144,7 @@ class CreateTaskView(View):
             json_response = JSONResponse()
 
             if log_id and int(log_id) > 0:
-                json_response.data = Tasks.save_item(int(log_id),Tasks.PENDING_STATUS)
+                json_response.data = Tasks.save_item(int(log_id),Tasks.PENDING_STATUS).id
                 json_response.status = JSONResponse.SUCCESS_STATUS
             else:
                 json_response = json_response.form_invalid_response('Please provide valid search ID.')
