@@ -222,6 +222,6 @@ class TestView(View):
 
     def get(self, request, *args, **kwargs):
         url = request.GET.get('url', '')
-        content = Scraper.ex_data(url)
+        content = WebDriver.sel_post(url)
 
         return HttpResponse(content)
