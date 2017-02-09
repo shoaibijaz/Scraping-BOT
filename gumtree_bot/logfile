@@ -1,0 +1,15 @@
+[09/Feb/2017 12:00:54] DEBUG [requests.packages.urllib3.connectionpool:809] Starting new HTTPS connection (1): www.gumtree.sg
+[09/Feb/2017 12:00:56] DEBUG [requests.packages.urllib3.connectionpool:400] https://www.gumtree.sg:443 "GET /s-shirts/page-1/v1q0p1 HTTP/1.1" 301 None
+[09/Feb/2017 12:00:56] DEBUG [requests.packages.urllib3.connectionpool:247] Resetting dropped connection: www.gumtree.sg
+[09/Feb/2017 12:00:56] DEBUG [requests.packages.urllib3.connectionpool:400] https://www.gumtree.sg:443 "GET /s-shirts/v1q0p1 HTTP/1.1" 200 None
+[09/Feb/2017 12:01:00] DEBUG [requests.packages.urllib3.connectionpool:809] Starting new HTTPS connection (1): www.gumtree.sg
+[09/Feb/2017 12:01:01] DEBUG [requests.packages.urllib3.connectionpool:400] https://www.gumtree.sg:443 "GET /s-shirts/page-2/v1q0p2 HTTP/1.1" 200 None
+[09/Feb/2017 12:01:29] DEBUG [app.bots.gumtree_message_bot:36] doh!
+[09/Feb/2017 12:01:29] DEBUG [requests.packages.urllib3.connectionpool:809] Starting new HTTPS connection (1): www.gumtree.sg
+[09/Feb/2017 12:01:29] DEBUG [requests.packages.urllib3.connectionpool:400] https://www.gumtree.sg:443 "POST /rui-api/page/reply/model/en_SG HTTP/1.1" 200 None
+[09/Feb/2017 12:02:43] DEBUG [app.bots.gumtree_message_bot:36] doh!
+[09/Feb/2017 12:02:43] DEBUG [requests.packages.urllib3.connectionpool:809] Starting new HTTPS connection (1): www.gumtree.sg
+[09/Feb/2017 12:02:44] DEBUG [requests.packages.urllib3.connectionpool:400] https://www.gumtree.sg:443 "POST /rui-api/page/reply/model/en_SG HTTP/1.1" 200 None
+[09/Feb/2017 12:03:38] DEBUG [app.bots.gumtree_message_bot:36] doh!
+[09/Feb/2017 12:03:38] DEBUG [requests.packages.urllib3.connectionpool:809] Starting new HTTPS connection (1): www.gumtree.sg
+[09/Feb/2017 12:03:39] DEBUG [requests.packages.urllib3.connectionpool:400] https://www.gumtree.sg:443 "POST /rui-api/page/reply/model/en_SG HTTP/1.1" 200 None

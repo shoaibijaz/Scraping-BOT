@@ -14,6 +14,18 @@ import time
 
 from app.models import *
 
+import logging
+
+try:  # Python 2.7+
+    from logging import NullHandler
+except ImportError:
+    class NullHandler(logging.Handler):
+        def emit(self, record):
+            pass
+
+log = logging.getLogger(__name__)
+log.addHandler(NullHandler())
+
 
 class CommentBot:
 
@@ -53,6 +65,7 @@ class CommentBot:
             return count
 
         except Exception as ex:
+            log.debug('Error:' + str(ex))
             raise ex
 
     @classmethod
@@ -88,7 +101,7 @@ class CommentBot:
 
             print(response.text)
 
-            if response and response.status_code == 200 and '"replyFieldValid":true' in response.text:
+            if response and response.status_code == 200 and u'"replyFieldValid":true' in response.text:
                 AdsMessages.save_item(form_data,ad,AdsMessages.SENT_STATUS)
                 return True
             else:
@@ -98,6 +111,7 @@ class CommentBot:
             return False
 
         except Exception as ex:
+            log.debug('Error:' + str(ex))
             return False
 
     @classmethod
