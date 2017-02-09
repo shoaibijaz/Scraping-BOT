@@ -148,8 +148,6 @@ class Tasks(models.Model):
     def save_item(cls, search_item, status):
         item = cls()
 
-        return type(search_item)
-
         if type(search_item) is int or type(search_item) is str:
             item.search_id = int(search_item)
         elif type(search_item) is SearchLog:

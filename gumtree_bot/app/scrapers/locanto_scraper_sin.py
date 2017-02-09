@@ -50,7 +50,7 @@ class Locanto:
             if r.status_code == 200:
                 content = r.text
 
-                if "Sorry, there are no matches for this search right now." not in content:
+                if u"Sorry, there are no matches for this search right now." not in content:
 
                     soup = BeautifulSoup(content, "html.parser")
 

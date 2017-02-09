@@ -40,7 +40,7 @@ class GumtreeScraperUK:
             if r.status_code == 200:
                 content = r.text
 
-                if "Sorry we didn't find any results" not in content:
+                if u"Sorry we didn't find any results" not in content:
 
                     soup = BeautifulSoup(content, "html.parser")
 

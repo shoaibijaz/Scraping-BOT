@@ -54,6 +54,7 @@
                     notification("error! failed to extract ads.");
                     removeDIVLoader($(defaults.scraperFormDIV));
                     $(defaults.commentForm).find("input,button").attr('disabled',false);
+                    location.reload(true);
                 }
             });
 
@@ -144,6 +145,7 @@
                 error: function(){
                     setButtonsStatus(false,true, 100);
                     notification('Operation failed to extract data.');
+                    location.reload(true);
                 }
             });
         };
@@ -191,6 +193,7 @@
                 error: function(){
                     setButtonsStatus(false,true, 100);
                     $(defaults.commentForm).find("input,button").attr('disabled',false);
+                    location.reload(true);
                 }
             });
 
@@ -325,6 +328,7 @@
                     $(defaults.commentForm).find("#id_task").val(defaults.taskID);
                     initAjaxCommentForm();
                     validateCommentForm();
+                    (defaults.commentForm).find("input, textarea").addClass('form-control');
                 },
                 error: function(){
                 }
