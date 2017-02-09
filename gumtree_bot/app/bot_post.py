@@ -21,13 +21,14 @@ log.addHandler(NullHandler())
 
 from pyvirtualdisplay import Display
 from selenium import webdriver
+from django.conf import settings
 
 class WebDriver():
 
     @classmethod
     def sel_post(cls, url):
 
-        log_path = '/var/log/apache2/geckodriver.log'
+        log_path = settings.STATICFILES_DIRS[0] +  '/geckodriver.log'
 
         driver = webdriver.Firefox(log_path = log_path)
 
