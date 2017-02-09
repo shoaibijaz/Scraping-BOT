@@ -27,7 +27,9 @@ class WebDriver():
     @classmethod
     def sel_post(cls, url):
 
-        driver = webdriver.Firefox()
+        log_path = '/var/log/apache2/geckodriver.log'
+
+        driver = webdriver.Firefox(log_path = log_path)
 
         try:
 
