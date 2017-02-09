@@ -143,8 +143,6 @@ class CreateTaskView(View):
 
             json_response = JSONResponse()
 
-            return HttpResponse(log_id)
-            
             if log_id and int(log_id) > 0:
                 json_response.data = Tasks.save_item(log_id,Tasks.PENDING_STATUS).id
                 json_response.status = JSONResponse.SUCCESS_STATUS
